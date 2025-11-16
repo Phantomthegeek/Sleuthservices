@@ -37,3 +37,8 @@ temp/
 dist/
 build/
 
+# SSL Certificates (sensitive)
+backend/ssl/*.pem
+backend/ssl/*.key
+backend/ssl/*.crt
+
