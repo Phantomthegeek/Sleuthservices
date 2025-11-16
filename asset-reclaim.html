@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Reclaim Services - Capital Reclaim</title>
+    <meta name="description" content="Professional asset reclaim services with secure case submission and confidential handling.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-content h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out;
+            text-shadow: 0 0 40px rgba(6, 182, 212, 0.3);
+        }
+        
+        .hero-description {
+            font-size: 1.5rem;
+            color: #e2e8f0;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            font-weight: 500;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+        
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 2.5rem;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 1.5rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: white;
+            animation: fadeInUp 1.2s ease-out 0.4s both;
+        }
+        
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            text-align: center;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .trust-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05), rgba(59, 130, 246, 0.05));
+            border-radius: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .trust-badge:hover::before {
+            opacity: 1;
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-5px);
+        }
+        
+        .trust-badge-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .trust-badge-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Service Categories */
+        .service-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .service-category {
+            padding: 2.5rem 2rem;
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            border-radius: 1.5rem;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(30, 64, 175, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .service-category:hover::before {
+            left: 100%;
+        }
+        
+        .service-category:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(30, 64, 175, 0.4);
+            box-shadow: 0 20px 50px rgba(30, 64, 175, 0.2);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+        }
+        
+        .service-category-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 24px;
+            font-size: 2.75rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-category:hover .service-category-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.3);
+        }
+        
+        .service-category h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.75rem;
+        }
+        
+        .service-category p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        
+        /* Process Timeline */
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .process-number {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.75rem;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .process-number::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            opacity: 0.2;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .process-step:hover .process-number {
+            transform: scale(1.15);
+            box-shadow: 0 12px 36px rgba(30, 64, 175, 0.4);
+        }
+        
+        .process-step h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .process-step p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+        
+        /* No Win No Fee Badge */
+        .guarantee-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+            color: white;
+            padding: 3rem 2.5rem;
+            border-radius: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+        
+        .guarantee-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .guarantee-badge h3 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .guarantee-badge p {
+            font-size: 1.25rem;
+            opacity: 0.98;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        
+        /* Success Metrics */
+        .success-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .metric-card {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .metric-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(30, 64, 175, 0.15);
+            border-color: rgba(30, 64, 175, 0.3);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+        }
+        
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            transition: all 0.4s ease;
+            display: block;
+        }
+        
+        .metric-card:hover .metric-value {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+        
+        .metric-label {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin: 3rem 0;
+        }
+        
+        .faq-item {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            padding: 1.75rem;
+            border-radius: 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            pointer-events: auto;
+            overflow: hidden;
+        }
+        
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #06b6d4, #3b82f6);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(30, 64, 175, 0.3);
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.12);
+            transform: translateX(4px);
+        }
+        
+        .faq-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .faq-item.active {
+            border-color: rgba(30, 64, 175, 0.5);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.2);
+            transform: translateX(0);
+        }
+        
+        .faq-item.active::before {
+            transform: scaleY(1);
+        }
+        
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            user-select: none;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .faq-item.active .faq-question {
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        margin-top 0.3s ease, 
+                        padding-top 0.3s ease,
+                        padding-bottom 0.3s ease, 
+                        opacity 0.3s ease;
+            margin-top: 0;
+            padding: 0 1.5rem;
+            color: #94a3b8;
+            line-height: 1.7;
+            opacity: 0;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            padding-bottom: 0.5rem;
+            opacity: 1;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        margin-top 0.3s ease, 
+                        padding-top 0.3s ease,
+                        padding-bottom 0.3s ease, 
+                        opacity 0.4s ease 0.1s;
+        }
+        
+        .faq-toggle {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(59, 130, 246, 0.1));
+            border-radius: 50%;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .faq-item:hover .faq-toggle {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(59, 130, 246, 0.2));
+            transform: scale(1.1);
+        }
+        
+        .faq-item.active .faq-toggle {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: white;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+        }
+        
+        /* Contact Methods */
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .contact-method {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1.25rem;
+            text-align: center;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-4px);
+            border-color: rgba(30, 64, 175, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 18px;
+            font-size: 2rem;
+        }
+        
+        /* Urgency Banner */
+        .urgency-banner {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.4s ease-out 0.8s both;
+        }
+        
+        .urgency-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        .urgency-banner strong {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .urgency-banner span {
+            display: block;
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+        
+        /* Social Proof */
+        .social-proof {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1.6s ease-out 1s both;
+        }
+        
+        .social-proof:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.12);
+            border-color: rgba(30, 64, 175, 0.2);
+        }
+        
+        .social-proof-text {
+            font-size: 1.25rem;
+            color: #e2e8f0;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 18px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.3);
+        }
+        
+        .expertise-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 1.25rem;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .expertise-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #06b6d4, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .expertise-item:hover {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            transform: translateX(12px);
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.15);
+            border-color: rgba(30, 64, 175, 0.3);
+        }
+        
+        .expertise-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .expertise-item div[style*="font-size"] {
+            font-size: 1.75rem !important;
+            transition: transform 0.3s ease;
+        }
+        
+        .expertise-item:hover div[style*="font-size"] {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .modern-feature {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 1.25rem;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modern-feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .modern-feature:hover {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: white;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(30, 64, 175, 0.15);
+            border-color: rgba(30, 64, 175, 0.3);
+        }
+        
+        .modern-feature:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Enhanced Button Styles */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.45) !important;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .trust-badges {
+                gap: 2rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .service-categories {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            
+            .process-timeline {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.25rem;
+            }
+            
+            .guarantee-badge {
+                padding: 2rem 1.5rem;
+            }
+            
+            .guarantee-badge h3 {
+                font-size: 1.75rem;
+            }
+            
+            .guarantee-badge p {
+                font-size: 1.1rem;
+            }
+            
+            .metric-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .metric-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1 style="background: linear-gradient(135deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Capital Reclaim</h1>
+                <p>Asset recovery & financial investigations</p>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="client-login.html" class="nav-link">Client Login</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="asset-reclaim.html" class="nav-link active">Asset Reclaim</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <!-- Enhanced Hero Section -->
+                <div class="hero-content">
+                    <h2>Recover What's Rightfully Yours</h2>
+                    <p class="hero-description">
+                        Expert asset recovery services with a <strong>100% free assessment</strong> and <strong>no win, no fee</strong> guarantee. 
+                        Our team specializes in recovering lost, unclaimed, or misappropriated assets with complete transparency and confidentiality.
+                    </p>
+                    
+                    <!-- Trust Badges -->
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <div class="trust-badge-number">£2.5M+</div>
+                            <div class="trust-badge-label">Recovered</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-badge-number">1,200+</div>
+                            <div class="trust-badge-label">Successful Cases</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-badge-number">24hrs</div>
+                            <div class="trust-badge-label">Response Time</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-badge-number">98%</div>
+                            <div class="trust-badge-label">Success Rate</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Urgency Banner -->
+                    <div class="urgency-banner">
+                        <strong>⚡ Free Assessment Limited</strong>
+                        <span>Only 47 slots remaining this month. Start your free case evaluation now!</span>
+                    </div>
+                    
+                    <!-- Social Proof -->
+                    <div class="social-proof">
+                        <div class="social-proof-text">✅ <strong>5 people</strong> started asset reclaim cases today</div>
+                        <div style="font-size: 0.9rem; color: var(--text-light);">Join hundreds of satisfied clients who recovered their assets</div>
+                    </div>
+                </div>
+
+                <!-- No Win No Fee Guarantee -->
+                <div class="guarantee-badge">
+                    <h3>💯 No Win, No Fee Guarantee</h3>
+                    <p>100% free assessment. We only get paid when you recover your assets. No hidden fees, no upfront costs, completely risk-free.</p>
+                </div>
+
+                <!-- Service Categories -->
+                <div class="service-categories">
+                    <div class="service-category">
+                        <div class="service-category-icon">🏢</div>
+                        <h4>Corporate Assets</h4>
+                        <p>Recover unclaimed dividends, bonds, stocks, and corporate entitlements</p>
+                    </div>
+                    <div class="service-category">
+                        <div class="service-category-icon">🏠</div>
+                        <h4>Property Reclaims</h4>
+                        <p>Recover lost deposits, property bonds, and real estate assets</p>
+                    </div>
+                    <div class="service-category">
+                        <div class="service-category-icon">💰</div>
+                        <h4>Financial Assets</h4>
+                        <p>Trace and recover bank accounts, investments, and pension funds</p>
+                    </div>
+                    <div class="service-category">
+                        <div class="service-category-icon">📋</div>
+                        <h4>Legal Recovery</h4>
+                        <p>Recover assets from legal disputes, inheritance, and settlements</p>
+                    </div>
+                </div>
+
+                <!-- Success Metrics -->
+                <div class="success-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">£12,500</div>
+                        <div class="metric-label">Average Recovery Amount</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">45 days</div>
+                        <div class="metric-label">Average Recovery Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">15 years</div>
+                        <div class="metric-label">Experience</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">500+</div>
+                        <div class="metric-label">Active Cases</div>
+                    </div>
+                </div>
+
+                <!-- Transparent Process Timeline -->
+                <div class="card" style="animation-delay: 0.1s;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <div class="feature-icon">🔍</div>
+                        <h3 style="margin: 0;">How Asset Recovery Works</h3>
+                    </div>
+                    
+                    <div class="process-timeline">
+                        <div class="process-step">
+                            <div class="process-number">1</div>
+                            <h4>Free Assessment</h4>
+                            <p>Submit your case details. Our experts review within 24 hours at no cost.</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-number">2</div>
+                            <h4>Investigation</h4>
+                            <p>We trace and verify your assets using advanced investigative techniques.</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-number">3</div>
+                            <h4>Recovery Plan</h4>
+                            <p>You receive a detailed recovery plan with timeline and success probability.</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-number">4</div>
+                            <h4>Asset Recovery</h4>
+                            <p>We handle all paperwork and legal processes to recover your assets.</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-number">5</div>
+                            <h4>You Get Paid</h4>
+                            <p>Assets are transferred directly to you. We only get paid when you succeed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid" style="gap: 2.5rem; margin: 3rem 0;">
+                    <div class="card" style="animation-delay: 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="feature-icon">🏢</div>
+                            <h3 style="margin: 0;">Our Asset Reclaim Expertise</h3>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">🏢</div>
+                                <span style="color: #000000; font-weight: 600;">Corporate asset recovery</span>
+                            </div>
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">🏠</div>
+                                <span style="color: #000000; font-weight: 600;">Property reclaim services</span>
+                            </div>
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">💰</div>
+                                <span style="color: #000000; font-weight: 600;">Financial asset tracing</span>
+                            </div>
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">📋</div>
+                                <span style="color: #000000; font-weight: 600;">Legal documentation support</span>
+                            </div>
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">🔍</div>
+                                <span style="color: #000000; font-weight: 600;">Asset verification & validation</span>
+                            </div>
+                            <div class="expertise-item">
+                                <div style="font-size: 1.5rem;">⚖️</div>
+                                <span style="color: #000000; font-weight: 600;">Litigation support services</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔒 Confidential Process</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">All cases handled with utmost discretion</span>
+                            </div>
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">👨‍⚖️ Expert Team</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">Specialized asset recovery professionals</span>
+                            </div>
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔐 Secure Handling</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">Encrypted document submission</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="animation-delay: 0.3s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="feature-icon">📝</div>
+                            <h3 style="margin: 0;">Start Your Asset Reclaim Case</h3>
+                        </div>
+                        <p class="card-description" style="margin-bottom: 1.5rem;">
+                            <strong>100% Free Assessment</strong> - No obligation, no hidden fees. Get expert evaluation of your case in 24 hours.
+                        </p>
+
+                        <!-- New Asset Reclaim Form -->
+                        <form id="assetReclaimForm" class="contact-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Company / Owner *</label>
+                                <input type="text" name="company" placeholder="Company or individual name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Contact Name *</label>
+                                <input type="text" name="contactName" placeholder="Your full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email Address *</label>
+                                <input type="email" name="email" placeholder="your.email@company.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" name="phone" placeholder="+1 (555) 123-4567" required>
+                                <small style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">We'll contact you within 24 hours</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Amount Lost *</label>
+                                <input type="text" name="amountLost" placeholder="Enter the amount you lost (e.g., $50,000)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Asset / Property Address</label>
+                                <input type="text" name="propertyAddress" placeholder="Full address of the asset/property (if applicable)">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Case Details *</label>
+                                <textarea name="details" rows="6" placeholder="Please provide detailed information about the asset, circumstances, estimated value, and any relevant background information..." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Supporting Documents (Optional)</label>
+                                <input type="file" name="files" multiple accept=".pdf,.jpg,.jpeg,.png">
+                                <div id="assetFileList" class="file-list">No files selected</div>
+                                <small class="file-hint">Max 5 files, 10MB each. PDF, JPG, PNG formats accepted.</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="assetSubmitBtn" style="width: 100%;">
+                                <span class="btn-text">🚀 Get Free Assessment - No Obligation</span>
+                                <span class="btn-loading" style="display: none;">Processing...</span>
+                            </button>
+
+                            <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+                                ✅ 100% Free • ✅ No Win No Fee • ✅ 24hr Response
+                            </div>
+
+                            <div id="assetReclaimStatus" class="form-status" aria-live="polite"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <div class="card" style="animation-delay: 0.4s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="feature-icon">❓</div>
+                            <h3 style="margin: 0;">Frequently Asked Questions</h3>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is "No Win, No Fee"?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                "No Win, No Fee" means you pay absolutely nothing if we don't successfully recover your assets. Our fee is only a percentage of what we recover for you. The initial assessment is 100% free with no obligation.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>How long does asset recovery take?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Recovery times vary based on asset type and complexity. Simple cases can be resolved in 30-45 days, while complex cases may take 3-6 months. We provide a clear timeline after the free assessment.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What types of assets can you recover?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                We recover all types of assets including: unclaimed bank accounts, dividends, bonds, stocks, property deposits, pension funds, inheritance, insurance claims, and financial settlements. If it's rightfully yours, we can help recover it.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>How much does it cost?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                The assessment is completely free. Our fee is only charged as a percentage of successfully recovered assets - typically 15-25% depending on case complexity. You only pay if we recover your assets, making it risk-free for you.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Is my information confidential?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Absolutely. We maintain strict confidentiality protocols. All information is encrypted and protected. We never share your details with third parties without your explicit consent. Your privacy is our top priority.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What if I'm not sure if I have a claim?</span>
+                                <span class="faq-toggle">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                That's why we offer a free assessment! Submit your details and our experts will evaluate your case at no cost. We'll tell you if you have a valid claim and the probability of success before you commit to anything.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multiple Contact Methods -->
+                <div class="card" style="animation-delay: 0.5s;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <div class="feature-icon">📞</div>
+                        <h3 style="margin: 0;">Get In Touch - Multiple Ways</h3>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">📧</div>
+                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Email Us</h4>
+                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Get a response within 24 hours</p>
+                            <a href="mailto:info@capitalreclaim.com" class="btn btn-secondary" style="width: 100%;">Send Email</a>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">📱</div>
+                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Call Us</h4>
+                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Speak directly with our team</p>
+                            <a href="tel:+441234567890" class="btn btn-secondary" style="width: 100%;">+44 123 456 7890</a>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">💬</div>
+                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Live Chat</h4>
+                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Chat with us in real-time</p>
+                            <button class="btn btn-secondary" style="width: 100%;" onclick="alert('Live chat coming soon! For now, please use email or phone.')">Start Chat</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Status Checker -->
+                <div class="card status-checker" style="animation-delay: 0.6s;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="feature-icon">🔍</div>
+                        <h3 style="margin: 0;">Check Asset Reclaim Case Status</h3>
+                    </div>
+                    <form id="checkAssetStatusForm" class="status-form">
+                        <div class="form-group">
+                            <input type="text" id="assetCaseId" name="assetCaseId" placeholder="Enter your case ID (e.g., AR-ABC123DEF)" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">Check Status</button>
+                    </form>
+                    <div id="assetCaseStatus" class="case-status"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Capital Reclaim. All rights reserved. | Confidentiality Guaranteed</p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">
+                <a href="privacy-policy.html" style="color: var(--text-light); text-decoration: none; margin-right: 1rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-light)'">Privacy Policy</a>
+                <a href="terms-of-service.html" style="color: var(--text-light); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-light)'">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Functionality - Using Event Delegation
+        (function() {
+            function initFAQ() {
+                const faqSection = document.querySelector('.faq-section');
+                if (!faqSection) {
+                    console.warn('FAQ section not found');
+                    return;
+                }
+                
+                // Attach click handlers directly to each FAQ item's question
+                const faqItems = faqSection.querySelectorAll('.faq-item');
+                
+                console.log('Found', faqItems.length, 'FAQ items to initialize');
+                
+                faqItems.forEach(function(faqItem, index) {
+                    const question = faqItem.querySelector('.faq-question');
+                    if (!question) {
+                        console.warn('FAQ item', index, 'missing question element');
+                        return;
+                    }
+                    
+                    // Add click handler to question element
+                    question.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        console.log('FAQ question clicked:', index);
+                        
+                        const wasActive = faqItem.classList.contains('active');
+                        const allItems = document.querySelectorAll('.faq-item');
+                        
+                        // Close all other FAQs
+                        allItems.forEach(function(otherItem) {
+                            if (otherItem !== faqItem) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current FAQ
+                        if (wasActive) {
+                            faqItem.classList.remove('active');
+                            console.log('FAQ closed:', index);
+                        } else {
+                            faqItem.classList.add('active');
+                            console.log('FAQ opened:', index);
+                            
+                            // Smooth scroll to FAQ if not visible
+                            setTimeout(function() {
+                                const rect = faqItem.getBoundingClientRect();
+                                const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+                                
+                                if (!isVisible) {
+                                    faqItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                }
+                            }, 200);
+                        }
+                    });
+                    
+                    // Also make toggle button clickable
+                    const toggle = question.querySelector('.faq-toggle');
+                    if (toggle) {
+                        toggle.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Trigger the question click
+                            question.click();
+                        });
+                    }
+                });
+                
+                console.log('FAQ dropdowns initialized');
+            }
+            
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initFAQ);
+            } else {
+                // DOM already loaded
+                initFAQ();
+            }
+        })();
+        
+        // Asset Reclaim Form Handler
+        class AssetReclaimForm {
+            constructor() {
+                this.form = document.getElementById('assetReclaimForm');
+                this.status = document.getElementById('assetReclaimStatus');
+                this.fileInput = this.form.querySelector('input[type="file"]');
+                this.fileList = document.getElementById('assetFileList');
+                this.submitBtn = document.getElementById('assetSubmitBtn');
+                this.btnText = this.submitBtn.querySelector('.btn-text');
+                this.btnLoading = this.submitBtn.querySelector('.btn-loading');
+                
+                this.init();
+            }
+
+            init() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+            }
+
+            handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                const errors = this.validateFiles(files);
+                
+                if (errors.length > 0) {
+                    alert('Please fix file errors:\n' + errors.join('\n'));
+                    e.target.value = '';
+                    this.updateFileList([]);
+                    return;
+                }
+                
+                this.updateFileList(files);
+            }
+
+            validateFiles(files, maxSize = 10 * 1024 * 1024) {
+                const errors = [];
+                const allowedTypes = [
+                    'image/jpeg', 'image/png', 'image/gif',
+                    'application/pdf'
+                ];
+
+                for (let file of files) {
+                    if (file.size > maxSize) {
+                        errors.push(`"${file.name}" exceeds 10MB limit`);
+                    }
+                    
+                    if (!allowedTypes.includes(file.type)) {
+                        errors.push(`"${file.name}" - file type not supported`);
+                    }
+                }
+
+                return errors;
+            }
+
+            updateFileList(files) {
+                if (files.length === 0) {
+                    this.fileList.textContent = 'No files selected';
+                    this.fileList.className = 'file-list';
+                    return;
+                }
+
+                const fileNames = files.map(f => f.name).join(', ');
+                this.fileList.textContent = `Selected: ${files.length} file(s) - ${fileNames}`;
+                this.fileList.className = 'file-list has-files';
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this.form);
+                const files = Array.from(this.fileInput.files);
+
+                const fileErrors = this.validateFiles(files);
+                if (fileErrors.length > 0) {
+                    this.setStatus('error', 'Please fix file errors before submitting.');
+                    return;
+                }
+
+                this.setLoading(true);
+                this.setStatus('sending', 'Submitting your asset reclaim case... Our team will review within 24 hours.');
+
+                try {
+                    const response = await fetch('/api/asset-reclaim', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.ok) {
+                        this.setStatus('success', 
+                            `✅ Asset reclaim case ${data.caseId} submitted successfully!\n\n` +
+                            `We've sent a confirmation email and will review your case within 24 hours. ` +
+                            `You'll receive a detailed assessment with recovery probability and next steps.`
+                        );
+                        this.form.reset();
+                        this.updateFileList([]);
+                        
+                        setTimeout(() => {
+                            this.clearStatus();
+                        }, 10000);
+                    } else {
+                        throw new Error(data.error || 'Submission failed');
+                    }
+                } catch (error) {
+                    console.error('Asset reclaim form submission error:', error);
+                    this.setStatus('error', 
+                        `❌ Submission failed: ${error.message}. Please try again or contact us directly.`
+                    );
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            setLoading(loading) {
+                if (loading) {
+                    this.submitBtn.disabled = true;
+                    this.btnText.style.display = 'none';
+                    this.btnLoading.style.display = 'inline-block';
+                } else {
+                    this.submitBtn.disabled = false;
+                    this.btnText.style.display = 'inline-block';
+                    this.btnLoading.style.display = 'none';
+                }
+            }
+
+            setStatus(type, message) {
+                this.status.textContent = message;
+                this.status.className = `form-status status-${type}`;
+                this.status.style.display = 'block';
+            }
+
+            clearStatus() {
+                this.status.textContent = '';
+                this.status.className = 'form-status';
+                this.status.style.display = 'none';
+            }
+        }
+
+        // Asset Case Status Checker
+        class AssetCaseStatus {
+            constructor() {
+                this.form = document.getElementById('checkAssetStatusForm');
+                this.statusDiv = document.getElementById('assetCaseStatus');
+                this.init();
+            }
+
+            init() {
+                if (this.form) {
+                    this.form.addEventListener('submit', (e) => this.checkStatus(e));
+                }
+            }
+
+            async checkStatus(e) {
+                e.preventDefault();
+                const caseId = document.getElementById('assetCaseId').value.trim();
+
+                if (!caseId) {
+                    this.showError('Please enter a case ID');
+                    return;
+                }
+
+                this.showLoading('Checking asset reclaim case status...');
+
+                try {
+                    const response = await fetch(`/api/case/${caseId}`);
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.showCaseDetails(data.case);
+                    } else {
+                        this.showError(data.error || 'Case not found');
+                    }
+                } catch (error) {
+                    console.error('Asset case status check error:', error);
+                    this.showError('Failed to check status. Please try again.');
+                }
+            }
+
+            showCaseDetails(caseData) {
+                const statusColors = {
+                    'new': '#f59e0b',
+                    'in-progress': '#3b82f6',
+                    'completed': '#10b981',
+                    'on-hold': '#6b7280'
+                };
+
+                const statusColor = statusColors[caseData.status] || '#6b7280';
+                
+                let updatesHtml = '';
+                if (caseData.updates && caseData.updates.length > 0) {
+                    updatesHtml = `
+                        <div class="case-updates">
+                            <h5>Recent Updates:</h5>
+                            ${caseData.updates.slice(-3).map(update => `
+                                <div class="update-item">
+                                    <div class="update-message">${update.message}</div>
+                                    <div class="update-meta">
+                                        <span>${new Date(update.date).toLocaleDateString()}</span>
+                                        <span style="color: ${statusColor}">${update.status}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                this.statusDiv.innerHTML = `
+                    <div class="case-details">
+                        <h4>Asset Reclaim Case ${caseData.id}</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                            <div>
+                                <strong>Status</strong>
+                                <div style="color: ${statusColor}">${this.formatStatus(caseData.status)}</div>
+                            </div>
+                            <div>
+                                <strong>Created</strong>
+                                <div>${new Date(caseData.createdAt).toLocaleDateString()}</div>
+                            </div>
+                            <div>
+                                <strong>Service</strong>
+                                <div>${caseData.service || 'Asset Reclaim'}</div>
+                            </div>
+                        </div>
+                        ${updatesHtml}
+                    </div>
+                `;
+            }
+
+            formatStatus(status) {
+                const statusMap = {
+                    'new': '🆕 New',
+                    'in-progress': '🔄 In Progress',
+                    'completed': '✅ Completed',
+                    'on-hold': '⏸️ On Hold'
+                };
+                return statusMap[status] || status;
+            }
+
+            showLoading(message) {
+                this.statusDiv.innerHTML = `
+                    <div class="form-status status-sending">
+                        ${message}
+                    </div>
+                `;
+            }
+
+            showError(message) {
+                this.statusDiv.innerHTML = `
+                    <div class="form-status status-error">
+                        ❌ ${message}
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new AssetReclaimForm();
+            new AssetCaseStatus();
+            if (document.getElementById('currentYear')) {
+                document.getElementById('currentYear').textContent = new Date().getFullYear();
+            }
+            console.log('Asset reclaim page initialized');
+        });
+    </script>
+</body>
+</html>

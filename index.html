@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleuthservice - Asset Recovery & Financial Investigations</title>
+    <meta name="description" content="Professional investigative services including corporate due diligence, digital forensics, surveillance and litigation support.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .hero-content h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out;
+            text-shadow: 0 0 40px rgba(6, 182, 212, 0.3);
+        }
+        
+        .hero-description {
+            font-size: 1.5rem;
+            color: var(--text);
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 500;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 18px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(6, 182, 212, 0.4);
+        }
+        
+        .modern-feature {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 1.25rem;
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modern-feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .modern-feature:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(30, 64, 175, 0.15);
+            border-color: rgba(30, 64, 175, 0.3);
+        }
+        
+        .modern-feature:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Enhanced Button Styles */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.45) !important;
+        }
+        
+        .services-list li {
+            transition: all 0.3s ease;
+            padding-left: 0.5rem;
+        }
+        
+        .services-list li:hover {
+            padding-left: 1rem;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1 style="background: linear-gradient(135deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Sleuthservice</h1>
+                <p>Asset recovery & financial investigations</p>
+            </div>
+            <nav class="nav">
+                <a href="asset-reclaim.html" class="nav-link">Asset Reclaim</a>
+                <a href="client-login.html" class="nav-link">Client Login</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Professional Investigative Services</h2>
+                    <p class="hero-description" style="color: #ffffff; font-weight: 500;">We provide corporate due diligence, digital forensics, surveillance and litigation support with complete confidentiality and precision.</p>
+                </div>
+
+                <div class="grid" style="gap: 2.5rem; margin-bottom: 3rem;">
+                    <div class="card" style="animation-delay: 0.1s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="feature-icon">🔒</div>
+                            <h3 style="margin: 0;">Our Services</h3>
+                        </div>
+                        <ul class="services-list" style="color: #ffffff;">
+                            <li style="color: #ffffff;">✅ Corporate due diligence</li>
+                            <li style="color: #ffffff;">✅ Digital forensics</li>
+                            <li style="color: #ffffff;">✅ Surveillance & asset tracing</li>
+                            <li style="color: #ffffff;">✅ Background screening</li>
+                            <li style="color: #ffffff;">✅ Litigation support</li>
+                            <li style="color: #ffffff;">✅ Confidential investigations</li>
+                        </ul>
+                        
+                        <div class="features" style="grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem;">
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">⚡ 24-48 Hour Response</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">Quick case assessment</span>
+                            </div>
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔐 Secure Communication</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">Encrypted channels</span>
+                            </div>
+                            <div class="modern-feature">
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🌍 Global Reach</strong>
+                                <span style="font-size: 0.95rem; color: #1e293b;">International network</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="animation-delay: 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="feature-icon">📋</div>
+                            <h3 style="margin: 0;">Start a Confidential Conversation</h3>
+                        </div>
+                        <p class="card-description" style="color: #ffffff; font-weight: 500;">Submit your case securely. All information is encrypted and protected with bank-level security.</p>
+
+                        <!-- New Contact Form -->
+                        <form id="contactForm" class="contact-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Full Name *" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email Address *" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Phone Number">
+                            </div>
+
+                            <div class="form-group">
+                                <select name="service">
+                                    <option value="">Select Service</option>
+                                    <option value="Digital Forensics">Digital Forensics</option>
+                                    <option value="Due Diligence">Due Diligence</option>
+                                    <option value="Background Screening">Background Screening</option>
+                                    <option value="Surveillance">Surveillance</option>
+                                    <option value="Asset Tracing">Asset Tracing</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="message" rows="4" placeholder="Brief case description..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="file-label">
+                                    <span>Attach Files (Optional)</span>
+                                    <input type="file" id="fileInput" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
+                                </label>
+                                <div id="fileList" class="file-list">No files selected</div>
+                                <small class="file-hint">Max 10MB per file. PDF, images, documents allowed.</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
+                                <span class="btn-text">Send &amp; Start Case</span>
+                                <span class="btn-loading" style="display: none;">Processing...</span>
+                            </button>
+
+                            <div id="formStatus" class="form-status"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Case Status Checker -->
+                <div class="card status-checker" style="animation-delay: 0.3s;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="feature-icon">🔍</div>
+                        <h3 style="margin: 0;">Check Case Status</h3>
+                    </div>
+
+                    <!-- New Status Form -->
+                    <form id="checkStatusForm" class="status-form">
+                        <div class="form-group">
+                            <input type="text" id="caseId" name="caseId" placeholder="Enter your case ID (e.g., C-ABC123DEF)" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">Check Status</button>
+                    </form>
+                    <div id="caseStatus" class="case-status"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+                <p>&copy; <span id="currentYear"></span> Sleuthservice. All rights reserved. | Confidentiality Guaranteed</p>
+                <p style="margin-top: 1rem; font-size: 0.875rem;">
+                    <a href="privacy-policy.html" style="color: var(--text-light); text-decoration: none; margin-right: 1rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-light)'">Privacy Policy</a>
+                    <a href="terms-of-service.html" style="color: var(--text-light); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-light)'">Terms of Service</a>
+                </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        if (document.getElementById('currentYear')) {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal Login - Sleuthservice</title>
+    <meta name="description" content="Secure client login portal for accessing case information and updates.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <script src="terms-acceptance.js" defer></script>
+    <style>
+        /* Client Login Page Specific Styles */
+        .login-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 60%, #1e293b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-page::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .login-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .login-container {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(30px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+            z-index: 2;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        /* Left Side - Branding & Info */
+        .login-branding {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            padding: 3rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        
+        .login-branding::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+        }
+
+        .login-branding::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 32px rgba(30, 64, 175, 0.4);
+            }
+        }
+
+        @keyframes progressShine {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-tagline {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0 0 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(8px);
+            opacity: 1;
+        }
+        
+        .feature-item-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover .feature-item-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Right Side - Login Form */
+        .login-form-section {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .login-form {
+            margin-top: 2rem;
+        }
+
+        .form-group-enhanced {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label-enhanced {
+            display: block;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input-enhanced {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: var(--text);
+            font-family: inherit;
+        }
+
+        .form-input-enhanced:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input-enhanced::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+            pointer-events: none;
+            transition: color 0.3s;
+        }
+
+        .form-input-enhanced:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .btn-enhanced {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-enhanced:hover::before {
+            left: 100%;
+        }
+
+        .btn-enhanced:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.45);
+        }
+        
+        .btn-enhanced::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn-enhanced:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-enhanced:active {
+            transform: translateY(0);
+        }
+
+        .btn-enhanced:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .status-sending {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+
+        .security-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .security-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .security-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .help-link {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .help-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .help-link a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .login-footer {
+            position: absolute;
+            bottom: 1rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            z-index: 1;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                border-radius: 1rem;
+                margin: 1rem;
+            }
+
+            .login-branding,
+            .login-form-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .brand-logo {
+                font-size: 2rem;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Hide default header/footer on login page */
+        .login-page .header,
+        .login-page .footer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <!-- Left Side: Branding & Features -->
+            <div class="login-branding">
+                <div class="brand-content">
+                    <div class="brand-logo">Sleuthservice</div>
+                    <p class="brand-tagline">
+                        Your trusted partner for asset recovery and financial investigations. 
+                        Access your case dashboard securely and stay updated on your case progress.
+                    </p>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <span>Real-time case status tracking</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">💬</div>
+                            <span>Secure messaging with your team</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">📄</div>
+                            <span>Download reports and documents</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">🔒</div>
+                            <span>Bank-level security & encryption</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Fully responsive mobile access</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <span>Instant notifications & updates</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Side: Login Form -->
+            <div class="login-form-section">
+                <div class="login-header">
+                    <h1 class="login-title" id="loginTitle">Welcome Back</h1>
+                    <p class="login-subtitle" id="loginSubtitle">
+                        Enter your email address to receive a secure one-time password (OTP) to access your client portal.
+                    </p>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div id="emailStep">
+                        <div class="form-group-enhanced">
+                            <label for="email" class="form-label-enhanced">Email Address</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    class="form-input-enhanced"
+                                    placeholder="your.email@example.com"
+                                    required
+                                    autocomplete="email"
+                                    autofocus
+                                >
+                                <span class="input-icon">✉️</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-enhanced" id="submitBtn">
+                            <span class="btn-content">
+                                <span id="btnText">Send OTP Code</span>
+                                <span id="btnLoading" class="spinner" style="display: none;"></span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div id="otpStep" style="display: none;">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3); animation: pulse 2s ease-in-out infinite;">
+                                📧
+                            </div>
+                            <p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">
+                                We've sent a verification code to
+                            </p>
+                            <p id="sentEmail" style="font-size: 1rem; font-weight: 600; color: var(--primary); margin: 0.5rem 0 0 0;"></p>
+                        </div>
+
+                        <div class="form-group-enhanced">
+                            <label for="otp" class="form-label-enhanced" style="text-align: center; font-size: 1.1rem;">Enter Verification Code</label>
+                            <div class="input-wrapper" style="max-width: 400px; margin: 0 auto;">
+                                <input 
+                                    type="text" 
+                                    id="otp" 
+                                    name="otp" 
+                                    class="form-input-enhanced"
+                                    placeholder="000000"
+                                    maxlength="6"
+                                    pattern="[0-9]{6}"
+                                    required
+                                    autocomplete="one-time-code"
+                                    autofocus
+                                    style="text-align: center; letter-spacing: 0.8rem; font-size: 2rem; font-family: 'Courier New', monospace; font-weight: bold; padding: 1.5rem 1rem; border: 3px solid var(--primary); border-radius: 16px; background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%); transition: all 0.3s ease;"
+                                >
+                            </div>
+                            <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--text-light); line-height: 1.6;">
+                                <span style="display: inline-block; margin-right: 0.5rem;">⏱️</span>
+                                Code expires in <strong>10 minutes</strong>
+                            </p>
+                            <div id="otpProgress" style="display: none; width: 100%; max-width: 400px; margin: 1rem auto 0; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden;">
+                                <div style="height: 100%; background: linear-gradient(90deg, #1e40af, #3b82f6); width: 0%; transition: width 0.3s ease; animation: progressShine 2s ease-in-out infinite;"></div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-enhanced" id="verifyOtpBtn" style="margin-top: 2rem;">
+                            <span class="btn-content">
+                                <span id="verifyBtnText">✓ Verify & Continue</span>
+                                <span id="verifyBtnLoading" class="spinner" style="display: none;"></span>
+                            </span>
+                        </button>
+
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <button type="button" class="btn-secondary" id="resendOtpBtn" style="width: 100%; max-width: 400px; background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 0.875rem 1.5rem; font-weight: 600; transition: all 0.3s ease;">
+                                <span id="resendBtnText">↻ Resend Code</span>
+                            </button>
+
+                            <button type="button" class="btn-secondary" id="backToEmailBtn" style="margin-top: 0.75rem; width: 100%; max-width: 400px; background: transparent; color: var(--text-light); border: 1px solid var(--border); padding: 0.75rem 1.5rem; font-size: 0.9rem;">
+                                ← Change Email Address
+                            </button>
+                        </div>
+
+                        <div id="devOtpDisplayContainer" style="margin-top: 2rem; display: none; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            <!-- OTP will be displayed here in development mode -->
+                        </div>
+
+                        <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border-left: 4px solid var(--primary);">
+                            <p style="margin: 0; font-size: 0.875rem; color: var(--text); line-height: 1.6;">
+                                <strong>💡 Tip:</strong> Can't find the email? Check your spam/junk folder. The code is 6 digits and expires in 10 minutes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="statusMessage" class="status-message"></div>
+
+                    <div class="security-info" id="securityInfo">
+                        <span class="security-icon">🔐</span>
+                        <div class="security-text">
+                            <strong>Secure Login:</strong> We use one-time password (OTP) authentication for enhanced security. 
+                            No passwords to remember. The code expires in 10 minutes for your protection.
+                        </div>
+                    </div>
+
+                    <div class="help-link">
+                        Don't have an account? 
+                        <a href="index.html">Contact us to get started</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            <p>&copy; 2024 Sleuthservice. All rights reserved. | Confidentiality Guaranteed</p>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Client Login Handler with OTP
+        class ClientLogin {
+            constructor() {
+                this.form = document.getElementById('loginForm');
+                this.status = document.getElementById('statusMessage');
+                this.submitBtn = document.getElementById('submitBtn');
+                this.btnText = document.getElementById('btnText');
+                this.btnLoading = document.getElementById('btnLoading');
+                this.emailInput = document.getElementById('email');
+                this.otpInput = document.getElementById('otp');
+                this.verifyOtpBtn = document.getElementById('verifyOtpBtn');
+                this.verifyBtnText = document.getElementById('verifyBtnText');
+                this.verifyBtnLoading = document.getElementById('verifyBtnLoading');
+                this.resendOtpBtn = document.getElementById('resendOtpBtn');
+                this.backToEmailBtn = document.getElementById('backToEmailBtn');
+                this.emailStep = document.getElementById('emailStep');
+                this.otpStep = document.getElementById('otpStep');
+                this.sentEmail = document.getElementById('sentEmail');
+                this.currentEmail = '';
+                this.resendTimer = null;
+                
+                this.init();
+            }
+
+            init() {
+                console.log('Initializing ClientLogin...');
+                console.log('Form element:', this.form);
+                console.log('Submit button:', this.submitBtn);
+                console.log('Email input:', this.emailInput);
+                
+                if (this.form) {
+                    this.form.addEventListener('submit', (e) => {
+                        console.log('Form submit event triggered');
+                        this.handleEmailSubmit(e);
+                    });
+                } else {
+                    console.error('Login form not found!');
+                }
+
+                // Also attach click handler to button as fallback
+                if (this.submitBtn) {
+                    this.submitBtn.addEventListener('click', (e) => {
+                        console.log('Submit button clicked directly');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const email = this.emailInput?.value.trim();
+                        if (email) {
+                            this.handleEmailSubmit(e);
+                        } else {
+                            this.emailInput?.focus();
+                            this.setStatus('error', 'Please enter your email address');
+                        }
+                    });
+                }
+
+                // Real-time email validation
+                this.emailInput?.addEventListener('input', () => {
+                    this.clearStatus();
+                });
+
+                // OTP input - only allow numbers and limit to 6 digits
+                this.otpInput?.addEventListener('input', (e) => {
+                    // Remove any non-numeric characters and limit to 6 digits
+                    let value = e.target.value.replace(/[^0-9]/g, '');
+                    if (value.length > 6) {
+                        value = value.substring(0, 6);
+                    }
+                    e.target.value = value;
+                    this.clearStatus();
+                    
+                    // Log the value for debugging
+                    if (value.length > 0) {
+                        console.log('OTP input value:', value, 'length:', value.length);
+                    }
+                });
+                
+                // Also clean on paste
+                this.otpInput?.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData || window.clipboardData).getData('text');
+                    const cleaned = pasted.replace(/[^0-9]/g, '').substring(0, 6);
+                    this.otpInput.value = cleaned;
+                    this.otpInput.dispatchEvent(new Event('input', { bubbles: true }));
+                });
+
+                // Verify OTP button
+                this.verifyOtpBtn?.addEventListener('click', () => this.handleVerifyOtp());
+
+                // Resend OTP button
+                this.resendOtpBtn?.addEventListener('click', () => this.handleResendOtp());
+
+                // Back to email button
+                this.backToEmailBtn?.addEventListener('click', () => this.backToEmail());
+
+                // Auto-submit OTP when 6 digits entered (only if manually typed, not auto-filled)
+                this.otpInput?.addEventListener('input', (e) => {
+                    const isAutoFilled = e.target.hasAttribute('data-auto-filled');
+                    if (e.target.value.length === 6 && !isAutoFilled) {
+                        // Only auto-verify if user manually typed it
+                        setTimeout(() => this.handleVerifyOtp(), 300);
+                    }
+                    // Remove auto-filled flag after first input
+                    if (isAutoFilled) {
+                        e.target.removeAttribute('data-auto-filled');
+                    }
+                });
+            }
+
+            async handleEmailSubmit(e) {
+                console.log('handleEmailSubmit called');
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const email = this.emailInput?.value.trim();
+                console.log('Email value:', email);
+                
+                if (!email) {
+                    console.log('No email provided');
+                    this.setStatus('error', 'Please enter your email address');
+                    this.emailInput?.focus();
+                    return;
+                }
+
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    console.log('Invalid email format');
+                    this.setStatus('error', 'Please enter a valid email address (e.g., name@example.com)');
+                    this.emailInput?.focus();
+                    this.emailInput?.select();
+                    return;
+                }
+
+                console.log('Email validated, sending request...');
+                this.setLoading(true);
+                this.setStatus('sending', `Sending OTP code to ${email}...`);
+
+                try {
+                    console.log('Making API request to /api/client/request-login');
+                    const response = await fetch('/api/client/request-login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+                    
+                    console.log('Response status:', response.status, response.statusText);
+                    
+                    let data;
+                    try {
+                        data = await response.json();
+                        console.log('Response data:', data);
+                    } catch (parseError) {
+                        console.error('Failed to parse response:', parseError);
+                        throw new Error('Invalid server response');
+                    }
+                    
+                    if (response.ok && data.success) {
+                        console.log('✅ OTP sent successfully');
+                        console.log('📦 Response data:', JSON.stringify(data, null, 2));
+                        
+                        this.currentEmail = email;
+                        
+                        // Show OTP step first
+                        this.showOtpStep();
+                        
+                        // Show OTP in development mode (when returned in response)
+                        if (data.otp) {
+                            console.log('🔑 DEVELOPMENT MODE - OTP Code received:', data.otp);
+                            console.log('⏳ Waiting for OTP step to be visible...');
+                            
+                            // Multiple attempts to display OTP (ensure it shows)
+                            setTimeout(() => {
+                                console.log('🔄 Attempt 1: Displaying OTP...');
+                                this.displayOtpInDevMode(data.otp);
+                            }, 100);
+                            
+                            setTimeout(() => {
+                                console.log('🔄 Attempt 2: Displaying OTP...');
+                                this.displayOtpInDevMode(data.otp);
+                            }, 500);
+                            
+                            setTimeout(() => {
+                                console.log('🔄 Attempt 3: Displaying OTP...');
+                                this.displayOtpInDevMode(data.otp);
+                            }, 1000);
+                        } else {
+                            console.log('⚠️ OTP not in response');
+                            console.log('Response keys:', Object.keys(data || {}));
+                            console.log('Full response:', JSON.stringify(data, null, 2));
+                        }
+                        
+                        // Show status with OTP if available
+                        let statusMsg = `✅ OTP code sent! Check your email inbox (and spam folder) for the 6-digit code.`;
+                        if (data.otp) {
+                            statusMsg += `\n\n🔑 DEVELOPMENT MODE - Your OTP: ${data.otp}`;
+                        }
+                        this.setStatus('success', statusMsg);
+                        
+                        // Start resend timer (60 seconds)
+                        this.startResendTimer();
+                    } else {
+                        console.error('API returned error:', data);
+                        throw new Error(data.error || 'Failed to send OTP code');
+                    }
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    let errorMessage = 'Unable to send OTP code. ';
+                    
+                    if (error.message.includes('No cases found')) {
+                        errorMessage += `We couldn't find any cases associated with ${email}. Please contact support or check your email address.`;
+                    } else if (error.message.includes('network') || error.message.includes('fetch')) {
+                        errorMessage += 'Please check your internet connection and try again.';
+                    } else if (error.message.includes('Invalid server response')) {
+                        errorMessage += 'Server error. Please try again later.';
+                    } else {
+                        errorMessage += error.message || 'Please try again or contact support if the problem persists.';
+                    }
+                    
+                    this.setStatus('error', `❌ ${errorMessage}`);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            async handleVerifyOtp() {
+                // Get OTP value and clean it (remove any non-digits, ensure it's exactly 6 digits)
+                let otp = this.otpInput.value.trim();
+                
+                // Remove any non-numeric characters
+                otp = otp.replace(/[^0-9]/g, '');
+                
+                console.log('🔐 Verifying OTP:', {
+                    rawValue: this.otpInput.value,
+                    cleanedOtp: otp,
+                    length: otp.length,
+                    email: this.currentEmail
+                });
+                
+                if (!otp || otp.length !== 6) {
+                    this.setStatus('error', 'Please enter a valid 6-digit code');
+                    this.otpInput.focus();
+                    return;
+                }
+
+                this.setVerifyLoading(true);
+                this.clearStatus();
+
+                try {
+                    const response = await fetch('/api/client/verify-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            email: this.currentEmail,
+                            otp: otp // Send cleaned OTP
+                        })
+                    });
+                    
+                    console.log('Verification response status:', response.status);
+                    
+                    const data = await response.json();
+                    
+                    if (data.success && data.token) {
+                        this.setStatus('success', '✅ Login successful! Redirecting to dashboard...');
+                        
+                        // Store token and redirect
+                        localStorage.setItem('clientToken', data.token);
+                        console.log('✅ Token stored:', data.token.substring(0, 20) + '...');
+                        console.log('🔄 Redirecting to dashboard...');
+                        
+                        // Small delay to show success message
+                        setTimeout(() => {
+                            window.location.href = `client-dashboard.html?token=${data.token}`;
+                        }, 800);
+                    } else {
+                        throw new Error(data.error || 'Invalid OTP code');
+                    }
+                    
+                } catch (error) {
+                    console.error('Verify OTP error:', error);
+                    let errorMessage = 'Invalid or expired code. ';
+                    
+                    if (error.message.includes('expired')) {
+                        errorMessage += 'The code has expired. Please request a new one.';
+                    } else if (error.message.includes('Invalid')) {
+                        errorMessage += 'Please check the code and try again.';
+                    } else {
+                        errorMessage += error.message || 'Please try again.';
+                    }
+                    
+                    this.setStatus('error', `❌ ${errorMessage}`);
+                    this.otpInput.select();
+                } finally {
+                    this.setVerifyLoading(false);
+                }
+            }
+
+            async handleResendOtp() {
+                if (this.resendTimer) {
+                    return; // Still in cooldown
+                }
+
+                this.setLoading(true);
+                this.otpInput.value = '';
+                this.clearStatus();
+
+                try {
+                    const response = await fetch('/api/client/request-login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: this.currentEmail })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.setStatus('success', '✅ New OTP code sent! Check your email.');
+                        this.startResendTimer();
+                    } else {
+                        throw new Error(data.error || 'Failed to resend OTP');
+                    }
+                    
+                } catch (error) {
+                    this.setStatus('error', `❌ ${error.message || 'Failed to resend code. Please try again.'}`);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            showOtpStep() {
+                console.log('showOtpStep called');
+                this.emailStep.style.display = 'none';
+                this.otpStep.style.display = 'block';
+                this.sentEmail.textContent = this.currentEmail;
+                document.getElementById('loginTitle').textContent = 'Check Your Email';
+                document.getElementById('loginSubtitle').textContent = 'Enter the 6-digit verification code we sent to your email address.';
+                
+                // Verify OTP step is visible
+                setTimeout(() => {
+                    const otpStep = document.getElementById('otpStep');
+                    const container = document.getElementById('devOtpDisplayContainer');
+                    console.log('OTP step display:', window.getComputedStyle(otpStep).display);
+                    console.log('OTP container exists:', !!container);
+                    
+                    this.otpInput.focus();
+                }, 300);
+                
+                // Start countdown timer visual (optional progress bar)
+                this.startOtpCountdown();
+            }
+
+            startOtpCountdown() {
+                // Optional: Show progress bar or countdown
+                const progressBar = document.getElementById('otpProgress');
+                if (progressBar) {
+                    progressBar.style.display = 'block';
+                    let progress = 0;
+                    const totalTime = 10 * 60 * 1000; // 10 minutes in ms
+                    const updateInterval = 1000; // Update every second
+                    const incrementPerSecond = 100 / (totalTime / updateInterval);
+                    
+                    const progressInterval = setInterval(() => {
+                        progress += incrementPerSecond;
+                        if (progress <= 100) {
+                            const progressBarFill = progressBar.querySelector('div');
+                            if (progressBarFill) {
+                                progressBarFill.style.width = progress + '%';
+                            }
+                        } else {
+                            clearInterval(progressInterval);
+                        }
+                    }, updateInterval);
+                    
+                    // Store interval ID for cleanup
+                    this.otpProgressInterval = progressInterval;
+                }
+            }
+
+            clearOtpCountdown() {
+                if (this.otpProgressInterval) {
+                    clearInterval(this.otpProgressInterval);
+                    this.otpProgressInterval = null;
+                }
+                const progressBar = document.getElementById('otpProgress');
+                if (progressBar) {
+                    progressBar.style.display = 'none';
+                    const progressBarFill = progressBar.querySelector('div');
+                    if (progressBarFill) {
+                        progressBarFill.style.width = '0%';
+                    }
+                }
+            }
+
+            backToEmail() {
+                this.otpStep.style.display = 'none';
+                this.emailStep.style.display = 'block';
+                this.otpInput.value = '';
+                this.currentEmail = '';
+                this.clearStatus();
+                this.clearResendTimer();
+                this.clearOtpCountdown();
+                
+                // Hide OTP display container
+                const otpContainer = document.getElementById('devOtpDisplayContainer');
+                if (otpContainer) {
+                    otpContainer.style.display = 'none';
+                    otpContainer.innerHTML = '';
+                }
+                
+                document.getElementById('loginTitle').textContent = 'Welcome Back';
+                document.getElementById('loginSubtitle').textContent = 'Enter your email address to receive a secure one-time password (OTP) to access your client portal.';
+                setTimeout(() => {
+                    this.emailInput.focus();
+                }, 300);
+            }
+
+            startResendTimer() {
+                let countdown = 60;
+                const resendBtnText = document.getElementById('resendBtnText');
+                
+                if (this.resendTimer) {
+                    clearInterval(this.resendTimer);
+                }
+                
+                this.resendOtpBtn.disabled = true;
+                resendBtnText.textContent = `Resend in ${countdown}s`;
+                
+                this.resendTimer = setInterval(() => {
+                    countdown--;
+                    if (countdown > 0) {
+                        resendBtnText.textContent = `Resend in ${countdown}s`;
+                    } else {
+                        clearInterval(this.resendTimer);
+                        this.resendTimer = null;
+                        this.resendOtpBtn.disabled = false;
+                        resendBtnText.textContent = 'Resend Code';
+                    }
+                }, 1000);
+            }
+
+            clearResendTimer() {
+                if (this.resendTimer) {
+                    clearInterval(this.resendTimer);
+                    this.resendTimer = null;
+                }
+                this.resendOtpBtn.disabled = false;
+                document.getElementById('resendBtnText').textContent = 'Resend Code';
+            }
+
+            displayOtpInDevMode(otp) {
+                console.log('═══════════════════════════════════');
+                console.log('displayOtpInDevMode called with OTP:', otp);
+                console.log('═══════════════════════════════════');
+                
+                // Validate OTP
+                if (!otp || typeof otp !== 'string') {
+                    console.error('❌ Invalid OTP provided:', otp);
+                    return;
+                }
+
+                console.log('Creating OTP display on OTP page for:', otp);
+                
+                // Get the container in the OTP step
+                const container = document.getElementById('devOtpDisplayContainer');
+                console.log('Container element:', container);
+                
+                if (!container) {
+                    console.error('❌ OTP container not found! Trying to find it...');
+                    // Try to find it again after a delay
+                    setTimeout(() => {
+                        const retryContainer = document.getElementById('devOtpDisplayContainer');
+                        if (retryContainer) {
+                            console.log('✅ Container found on retry!');
+                            this.displayOtpInDevMode(otp);
+                        } else {
+                            console.error('❌ Container still not found. OTP step may not be visible yet.');
+                        }
+                    }, 500);
+                    return;
+                }
+                
+                console.log('✅ Container found, creating OTP display...');
+                console.log('Container parent display:', window.getComputedStyle(container.parentElement).display);
+                
+                // Ensure container and parent are visible
+                const otpStep = document.getElementById('otpStep');
+                if (otpStep) {
+                    otpStep.style.display = 'block';
+                    console.log('✅ OTP step forced to display: block');
+                }
+
+                // Create development OTP display box - make it very visible
+                container.innerHTML = `
+                    <div id="devOtpBox" style="padding: 2rem; background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 3px solid #1e40af; border-radius: 20px; box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3); animation: pulse 2s ease-in-out infinite;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+                            <div style="font-size: 2rem;">🔑</div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 1.2rem; color: #1e40af;">Development Mode</div>
+                                <div style="font-size: 0.9rem; color: var(--text-light);">OTP Code (for testing)</div>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 2rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center; border: 3px dashed #1e40af; box-shadow: inset 0 2px 8px rgba(30, 64, 175, 0.1);">
+                            <div style="font-size: 1rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1rem;">Your OTP Code:</div>
+                            <div style="font-size: 4rem; font-weight: 900; font-family: 'Courier New', monospace; letter-spacing: 1rem; color: #1e40af; text-shadow: 0 4px 8px rgba(30, 64, 175, 0.2); line-height: 1.2;">
+                                ${otp}
+                            </div>
+                        </div>
+                        <button id="copyOtpBtn" onclick="navigator.clipboard.writeText('${otp}'); const btn = document.getElementById('copyOtpBtn'); const original = btn.innerHTML; btn.innerHTML='✓ Copied to Clipboard!'; btn.style.background='#10b981'; setTimeout(() => { btn.innerHTML = original; btn.style.background=''; }, 2000);" 
+                                style="width: 100%; padding: 1.125rem; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border: none; border-radius: 12px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 16px rgba(30, 64, 175, 0.4);">
+                            📋 Copy OTP Code
+                        </button>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: #dc2626; text-align: center; font-weight: 600; padding: 0.5rem; background: rgba(220, 38, 38, 0.1); border-radius: 8px;">
+                            ⚠️ This will not appear in production
+                        </div>
+                    </div>
+                `;
+                
+                // Show the container with aggressive styling
+                container.style.display = 'block';
+                container.style.visibility = 'visible';
+                container.style.opacity = '1';
+                
+                console.log('✅ OTP displayed on OTP page');
+                console.log('Container display style:', window.getComputedStyle(container).display);
+                console.log('Container visibility:', window.getComputedStyle(container).visibility);
+                
+                // Verify it's actually visible
+                setTimeout(() => {
+                    const rect = container.getBoundingClientRect();
+                    console.log('Container dimensions:', {
+                        width: rect.width,
+                        height: rect.height,
+                        top: rect.top,
+                        left: rect.left,
+                        visible: rect.width > 0 && rect.height > 0
+                    });
+                    
+                    if (rect.width === 0 || rect.height === 0) {
+                        console.error('⚠️ Container has zero dimensions! It might be hidden.');
+                        // Force it visible
+                        container.style.cssText += '; display: block !important; visibility: visible !important; opacity: 1 !important;';
+                    }
+                }, 100);
+                
+                // Also auto-fill the OTP input field (for convenience, but don't auto-verify)
+                setTimeout(() => {
+                    const otpInput = document.getElementById('otp');
+                    if (otpInput && !otpInput.value) {
+                        // Ensure OTP is exactly 6 digits as string
+                        const cleanOtp = String(otp).trim().replace(/[^0-9]/g, '').substring(0, 6);
+                        if (cleanOtp.length === 6) {
+                            otpInput.value = cleanOtp;
+                            // Mark as auto-filled so it doesn't auto-verify
+                            otpInput.setAttribute('data-auto-filled', 'true');
+                            console.log('✅ OTP auto-filled in input field:', cleanOtp, '(manual verification required)');
+                        } else {
+                            console.error('⚠️ Invalid OTP length for auto-fill:', cleanOtp);
+                        }
+                    }
+                }, 500);
+            }
+
+            setLoading(loading) {
+                if (loading) {
+                    this.submitBtn.disabled = true;
+                    this.btnText.style.display = 'none';
+                    this.btnLoading.style.display = 'inline-block';
+                    this.emailInput.disabled = true;
+                } else {
+                    this.submitBtn.disabled = false;
+                    this.btnText.style.display = 'inline-block';
+                    this.btnLoading.style.display = 'none';
+                    this.emailInput.disabled = false;
+                }
+            }
+
+            setVerifyLoading(loading) {
+                if (loading) {
+                    this.verifyOtpBtn.disabled = true;
+                    this.verifyBtnText.style.display = 'none';
+                    this.verifyBtnLoading.style.display = 'inline-block';
+                    this.otpInput.disabled = true;
+                } else {
+                    this.verifyOtpBtn.disabled = false;
+                    this.verifyBtnText.style.display = 'inline-block';
+                    this.verifyBtnLoading.style.display = 'none';
+                    this.otpInput.disabled = false;
+                }
+            }
+
+            setStatus(type, message) {
+                this.status.textContent = message;
+                this.status.className = `status-message status-${type} show`;
+                
+                // Scroll to status message smoothly
+                setTimeout(() => {
+                    this.status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+
+            clearStatus() {
+                this.status.textContent = '';
+                this.status.className = 'status-message';
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded - Initializing ClientLogin');
+            const clientLogin = new ClientLogin();
+            
+            // Make it globally accessible for debugging
+            window.clientLogin = clientLogin;
+            
+            // Test OTP banner display (for debugging)
+            window.testOtpBanner = function(otp) {
+                console.log('Testing OTP banner with:', otp || '123456');
+                clientLogin.displayOtpInDevMode(otp || '123456');
+            };
+            
+            console.log('✅ Client login page initialized');
+            console.log('💡 Tip: Use testOtpBanner("123456") in console to test the banner');
+            
+            // Double-check form submission
+            const form = document.getElementById('loginForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (form) {
+                console.log('Form found, adding additional listener');
+                form.addEventListener('submit', (e) => {
+                    console.log('Form submit (DOMContentLoaded listener)');
+                    e.preventDefault();
+                    if (clientLogin && clientLogin.handleEmailSubmit) {
+                        clientLogin.handleEmailSubmit(e);
+                    }
+                });
+            }
+            
+            if (submitBtn) {
+                console.log('Submit button found, adding click listener');
+                submitBtn.addEventListener('click', (e) => {
+                    console.log('Button click (DOMContentLoaded listener)');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (clientLogin && clientLogin.handleEmailSubmit) {
+                        clientLogin.handleEmailSubmit(e);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
