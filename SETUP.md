@@ -34,9 +34,9 @@ npm start
 ```
 
 2. Open your browser and navigate to:
-- Main site: `http://localhost:3000`
-- Admin Dashboard: `http://localhost:3000/admin-dashboard.html`
-  - Email: `admin@sleuthservices.com`
+- Main site: `http://localhost:3000` (Production: `https://sleuthservice.com`)
+- Admin Dashboard: `http://localhost:3000/admin-dashboard.html` (Production: `https://sleuthservice.com/admin-dashboard.html`)
+  - Email: `admin@sleuthservice.com`
   - Password: `admin123` (configured in .env)
 
 ## Features

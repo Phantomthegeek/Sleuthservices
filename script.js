@@ -1,4 +1,4 @@
-// Capital Reclaim Frontend JavaScript
+// Sleuthservice Frontend JavaScript
 class ContactForm {
     constructor() {
         this.form = document.getElementById('contactForm');

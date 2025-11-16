@@ -4,7 +4,7 @@
 (function() {
     'use strict';
     
-    const TERMS_ACCEPTED_KEY = 'capitalReclaim_termsAccepted';
+    const TERMS_ACCEPTED_KEY = 'sleuthservice_termsAccepted';
     const TERMS_VERSION = '1.0'; // Update this when terms change
     
     function initTermsAcceptance() {
@@ -65,7 +65,7 @@
             <div style="padding: 2rem; max-height: 50vh; overflow-y: auto;">
                 <div style="color: var(--text); line-height: 1.6;">
                     <h3 style="color: var(--primary); margin-top: 0;">Important Notice</h3>
-                    <p>By accessing and using Capital Reclaim services, you agree to be bound by our Terms of Service and Privacy Policy.</p>
+                    <p>By accessing and using Sleuthservice services, you agree to be bound by our Terms of Service and Privacy Policy.</p>
                     
                     <h4 style="color: var(--text); margin-top: 1.5rem;">Key Points:</h4>
                     <ul>
