@@ -1,5 +1,5 @@
-// Load environment variables from .env file
-require('dotenv').config();
+// Load centralized configuration
+const config = require('./src/config');
 
 const express = require('express');
 const multer = require('multer');
@@ -13,13 +13,23 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 
+// Import custom utilities
+const logger = require('./src/utils/logger');
+const {
+  validateContactInput,
+  validateCaseId,
+  validateAdminLogin,
+  validatePagination,
+  validateFileUpload
+} = require('./src/middleware/validation');
+
 const app = express();
 
 // Load SSL certificates if they exist
 let httpsEnabled = false;
 let httpsServer = null;
 
-if (process.env.USE_HTTPS !== 'false') {
+if (config.useHttps) {
   try {
     const fs = require('fs');
     const https = require('https');
@@ -33,45 +43,34 @@ if (process.env.USE_HTTPS !== 'false') {
       };
       httpsServer = https.createServer(options, app);
       httpsEnabled = true;
-      console.log('🔒 HTTPS enabled with SSL certificate');
+      logger.info('HTTPS enabled with SSL certificate');
     }
   } catch (error) {
-    console.log('⚠️  HTTPS not available, using HTTP');
+    logger.warn('HTTPS not available, using HTTP', { error: error.message });
   }
 }
 
-const PORT = process.env.PORT || 3000;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@sleuthservice.com';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // ⚠️ CHANGE IN PRODUCTION - MUST be set in .env
-const JWT_SECRET = process.env.JWT_SECRET || 'capital-reclaim-secret-key-change-in-production'; // ⚠️ CHANGE IN PRODUCTION
+// Use config values
+const PORT = config.port;
+const ADMIN_EMAIL = config.admin.email;
+const ADMIN_PASSWORD = config.admin.password;
+const JWT_SECRET = config.jwt.secret;
 
-// Security warning for production
-if (process.env.NODE_ENV === 'production') {
-  if (ADMIN_PASSWORD === 'admin123' || !process.env.ADMIN_PASSWORD) {
-    console.error('🚨 CRITICAL SECURITY WARNING: Default admin password detected in production!');
-    console.error('🚨 Set ADMIN_PASSWORD in .env file immediately!');
-  }
-  if (JWT_SECRET.includes('capital-reclaim-secret-key-change-in-production')) {
-    console.error('🚨 CRITICAL SECURITY WARNING: Default JWT secret detected in production!');
-    console.error('🚨 Set JWT_SECRET in .env file immediately!');
-  }
-}
-
-// Configure email transporter - Using Outlook by default (no app password needed)
-// To use Gmail: Change host to 'smtp.gmail.com' and use App Password
-// To use Yahoo: Change host to 'smtp.mail.yahoo.com'
+// Configure email transporter using centralized config
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.office365.com',
-  port: 587,
-  secure: false,
+  host: config.email.host,
+  port: config.email.port,
+  secure: config.email.secure,
   auth: {
-    user: process.env.EMAIL_USER || 'noreply@sleuthservice.com',
-    pass: process.env.EMAIL_PASSWORD || 'vNOssNkZLM3t'
-  }
+    user: config.email.user,
+    pass: config.email.password
+  },
+  tls: {
+    rejectUnauthorized: false // Allow self-signed certs if needed
+  },
+  debug: config.env !== 'production', // Debug logging in development only
+  logger: config.env !== 'production' // Console logging in development only
 });
-
-// Set default email from address
-const DEFAULT_EMAIL_FROM = process.env.DEFAULT_EMAIL_FROM || process.env.EMAIL_USER || 'noreply@sleuthservice.com';
 
 // Security middleware - Enhanced for production
 app.use(helmet({
@@ -144,8 +143,71 @@ const clientVerifyLimiter = rateLimit({
 app.use('/api/client/request-login', clientLoginLimiter);
 app.use('/api/client/verify-otp', clientVerifyLimiter);
 
+// Rate limiting for public endpoints
+const publicApiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests. Please wait a few minutes before trying again.',
+  skipSuccessfulRequests: false,
+});
+
+const contactFormLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // limit each IP to 10 form submissions per hour
+  message: 'Too many form submissions. Please wait before submitting again.',
+  skipSuccessfulRequests: false,
+});
+
+const caseStatusLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // limit each IP to 30 status checks per windowMs
+  message: 'Too many status checks. Please wait a few minutes before trying again.',
+  skipSuccessfulRequests: false,
+});
+
+const clientReplyLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 50, // limit each IP to 50 replies per windowMs
+  message: 'Too many message submissions. Please wait a few minutes before trying again.',
+  skipSuccessfulRequests: false,
+});
+
+// Apply rate limiting to public endpoints
+app.use('/api/contact', contactFormLimiter);
+app.use('/api/asset-reclaim', contactFormLimiter);
+app.use('/api/case/:caseId', caseStatusLimiter);
+app.use('/api/client/reply', clientReplyLimiter);
+app.use('/api/health', publicApiLimiter);
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Compression middleware for production
+    if (config.env === 'production') {
+  const compression = require('compression');
+  app.use(compression());
+}
+
+// Caching headers for static assets
+const setCacheHeaders = (req, res, next) => {
+  // Cache static assets for 1 year
+  if (req.path.match(/\.(jpg|jpeg|png|gif|ico|svg|css|js|woff|woff2|ttf|eot)$/)) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+  // Cache HTML for 1 hour
+  else if (req.path.match(/\.html$/)) {
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+  }
+  // No cache for API endpoints
+  else if (req.path.startsWith('/api/')) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+  next();
+};
+
+app.use(setCacheHeaders);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '..')));
@@ -163,7 +225,7 @@ const initDirectories = async () => {
     await fs.access(leadsFile).catch(() => fs.writeFile(leadsFile, '[]', 'utf8'));
     await fs.access(usersFile).catch(() => fs.writeFile(usersFile, '[]', 'utf8'));
   } catch (error) {
-    console.error('Directory initialization failed:', error);
+    logger.error('Directory initialization failed', error);
   }
 };
 
@@ -174,7 +236,7 @@ const readLeads = async () => {
     const data = await fs.readFile(leadsFile, 'utf8');
     return JSON.parse(data || '[]');
   } catch (error) {
-    console.error('Error reading leads:', error);
+    logger.error('Error reading leads', error);
     return [];
   }
 };
@@ -209,14 +271,23 @@ const writeUsers = async (users) => {
 // Email helper
 const sendEmail = async (to, subject, html) => {
   try {
-    await transporter.sendMail({
-      from: DEFAULT_EMAIL_FROM,
+    logger.info('Attempting to send email', { to, subject });
+    const info = await transporter.sendMail({
+      from: config.email.from,
       to,
       subject,
       html
     });
+    logger.info('Email sent successfully', { to, messageId: info.messageId });
+    return info;
   } catch (error) {
-    console.error('Email error:', error);
+    logger.error('Email send failed', error, { 
+      to, 
+      subject,
+      errorCode: error.code,
+      errorMessage: error.message 
+    });
+    throw error; // Re-throw so caller knows email failed
   }
 };
 
@@ -238,55 +309,115 @@ const storage = multer.diskStorage({
   }
 });
 
+// Enhanced file upload security with magic bytes validation
+const validateFileMagicBytes = (buffer, expectedMimeType) => {
+  // Magic bytes (file signatures) for common file types
+  const magicBytes = {
+    'image/jpeg': [0xFF, 0xD8, 0xFF],
+    'image/png': [0x89, 0x50, 0x4E, 0x47],
+    'image/gif': [0x47, 0x49, 0x46, 0x38],
+    'application/pdf': [0x25, 0x50, 0x44, 0x46], // %PDF
+    'application/msword': [0xD0, 0xCF, 0x11, 0xE0], // DOC
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [0x50, 0x4B, 0x03, 0x04] // DOCX (ZIP)
+  };
+  
+  const expectedBytes = magicBytes[expectedMimeType];
+  if (!expectedBytes) return true; // Allow if no magic bytes defined (e.g., text/plain)
+  
+  // Check if buffer starts with expected magic bytes
+  return expectedBytes.every((byte, index) => buffer[index] === byte);
+};
+
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024, files: 5 },
+  limits: { 
+    fileSize: config.security.maxFileSizeMB * 1024 * 1024, 
+    files: config.security.maxFilesPerUpload 
+  },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = [
-      'image/jpeg', 'image/png', 'image/gif',
-      'application/pdf', 'text/plain',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    
-    if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error(`File type ${file.mimetype} not allowed`), false);
+    try {
+      const allowedTypes = [
+        'image/jpeg', 'image/png', 'image/gif',
+        'application/pdf', 'text/plain',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+      
+      if (!allowedTypes.includes(file.mimetype)) {
+        logger.warn('File upload rejected - invalid MIME type', { 
+          mimetype: file.mimetype, 
+          filename: file.originalname,
+          ip: req.ip 
+        });
+        return cb(new Error(`File type ${file.mimetype} not allowed`), false);
+      }
+      
+      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.pdf', '.txt', '.doc', '.docx'];
+      const fileExt = path.extname(file.originalname).toLowerCase();
+      if (!allowedExtensions.includes(fileExt)) {
+        logger.warn('File upload rejected - invalid extension', { 
+          extension: fileExt, 
+          filename: file.originalname,
+          ip: req.ip 
+        });
+        return cb(new Error(`File extension ${fileExt} not allowed`), false);
+      }
+      
+      // Additional security: Check filename for path traversal attempts
+      if (file.originalname.includes('..') || file.originalname.includes('/') || file.originalname.includes('\\')) {
+        logger.warn('File upload rejected - suspicious filename', { 
+          filename: file.originalname,
+          ip: req.ip 
+        });
+        return cb(new Error('Invalid filename'), false);
+      }
+      
+      cb(null, true);
+    } catch (error) {
+      logger.error('File filter error', error, { filename: file.originalname });
+      cb(error, false);
     }
-    
-    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.pdf', '.txt', '.doc', '.docx'];
-    const fileExt = path.extname(file.originalname).toLowerCase();
-    if (!allowedExtensions.includes(fileExt)) {
-      return cb(new Error(`File extension ${fileExt} not allowed`), false);
-    }
-    
-    cb(null, true);
   }
 });
 
-const validateContactInput = (data) => {
-  const errors = [];
-  
-  if (!data.name?.trim()) errors.push('Name is required');
-  if (!data.email?.trim()) errors.push('Email is required');
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (data.email && !emailRegex.test(data.email)) {
-    errors.push('Invalid email format');
+// Post-upload validation middleware (validates magic bytes after file is uploaded)
+const validateUploadedFile = async (req, res, next) => {
+  if (!req.files || req.files.length === 0) {
+    return next();
   }
   
-  if (data.name && data.name.length > 100) errors.push('Name too long');
-  if (data.email && data.email.length > 255) errors.push('Email too long');
-  
-  const sanitized = {
-    name: data.name?.trim().replace(/[<>]/g, ''),
-    email: data.email?.trim().replace(/[<>]/g, ''),
-    phone: data.phone?.trim().replace(/[<>]/g, ''),
-    service: data.service?.trim().replace(/[<>]/g, ''),
-    message: data.message?.trim().replace(/[<>]/g, '')
-  };
-  
-  return { errors, sanitized };
+  try {
+    for (const file of req.files) {
+      const filePath = file.path;
+      const buffer = await fs.readFile(filePath);
+      
+      // Validate magic bytes match declared MIME type
+      if (!validateFileMagicBytes(buffer, file.mimetype)) {
+        // Delete the suspicious file
+        await fs.unlink(filePath).catch(() => {});
+        logger.warn('File upload rejected - magic bytes mismatch', {
+          filename: file.originalname,
+          declaredMime: file.mimetype,
+          ip: req.ip
+        });
+        return res.status(400).json({ 
+          success: false, 
+          error: `File type validation failed for ${file.originalname}` 
+        });
+      }
+    }
+    next();
+  } catch (error) {
+    logger.error('File validation error', error);
+    // Clean up uploaded files on error
+    for (const file of req.files) {
+      await fs.unlink(file.path).catch(() => {});
+    }
+    res.status(500).json({ success: false, error: 'File validation failed' });
+  }
 };
+
+// validateContactInput is now imported from middleware/validation.js
 
 const generateCaseId = () => 'C-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2, 4).toUpperCase();
 
@@ -306,7 +437,7 @@ const moveFilesToCaseFolder = async (tempFiles, caseId) => {
         url: `/api/uploads/${caseId}/${tempFile.filename}`
       });
     } catch (error) {
-      console.error('Error moving file:', error);
+      logger.error('Error moving file', error, { caseId, filename: tempFile.filename });
     }
   }
 
@@ -328,7 +459,7 @@ app.get('/api/uploads/:caseId/:filename', async (req, res) => {
     res.sendFile(filePath);
     
   } catch (error) {
-    console.error('File download error:', error);
+    logger.error('File download error', error, { caseId: req.params.caseId, filename: req.params.filename });
     res.status(404).json({ error: 'File not found' });
   }
 });
@@ -381,12 +512,12 @@ const logAdminActivity = async (action, adminEmail, details = {}) => {
     
     await fs.appendFile(logFile, JSON.stringify(logEntry) + '\n');
   } catch (error) {
-    console.error('Failed to log admin activity:', error);
+    logger.error('Failed to log admin activity', error);
   }
 };
 
 // AUTH API
-app.post('/api/admin/login', async (req, res) => {
+app.post('/api/admin/login', validateAdminLogin, async (req, res) => {
   try {
     const { email, password } = req.body;
     const clientIP = req.ip || req.connection.remoteAddress || 'unknown';
@@ -442,19 +573,18 @@ app.post('/api/admin/login', async (req, res) => {
     
     res.status(401).json({ error: 'Invalid credentials' });
   } catch (error) {
-    console.error('Login error:', error);
+    logger.error('Admin login error', error, { ip: req.ip });
     res.status(500).json({ error: 'Login failed' });
   }
 });
 
 // ADMIN API ENDPOINTS
-app.get('/api/admin/cases', authenticateAdmin, async (req, res) => {
+app.get('/api/admin/cases', authenticateAdmin, validatePagination, async (req, res) => {
   try {
     const leads = await readLeads();
     
-    // Pagination support
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
+    // Pagination support (from middleware)
+    const { page, limit } = req.pagination;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     
@@ -753,7 +883,7 @@ app.post('/api/admin/send-email', authenticateAdmin, async (req, res) => {
   try {
     const { to, cc, subject, message, caseId, priority } = req.body;
     
-    console.log('Webmail request received:', { to, cc, subject, message: message?.substring(0, 50), caseId, priority });
+    logger.info('Webmail request received', { to, cc, subject: subject?.substring(0, 50), caseId, priority });
     
     if (!to || !subject || !message) {
       return res.status(400).json({ success: false, error: 'Missing required fields: to, subject, message' });
@@ -798,7 +928,7 @@ app.post('/api/admin/send-email', authenticateAdmin, async (req, res) => {
     `;
     
     const mailOptions = {
-      from: DEFAULT_EMAIL_FROM,
+      from: config.email.from,
       to: to,
       subject: subject,
       html: emailHtml
@@ -809,7 +939,7 @@ app.post('/api/admin/send-email', authenticateAdmin, async (req, res) => {
     }
     
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully to:', to, cc ? `(CC: ${cc})` : '');
+    logger.info('Email sent successfully', { to, cc: cc || null });
     
     // Store email in case history (if caseId provided)
     if (caseId) {
@@ -834,7 +964,7 @@ app.post('/api/admin/send-email', authenticateAdmin, async (req, res) => {
           await writeLeads(leads);
         }
       } catch (error) {
-        console.error('Failed to save email history:', error);
+        logger.error('Failed to save email history', error);
       }
     }
     
@@ -847,7 +977,7 @@ app.post('/api/admin/send-email', authenticateAdmin, async (req, res) => {
         to: req.body.to
       }).catch(() => {});
     }
-    console.error('Email send error:', error);
+    logger.error('Email send error', error, { to, subject });
     res.status(500).json({ success: false, error: 'Failed to send email: ' + error.message });
   }
 });
@@ -873,18 +1003,14 @@ app.post('/api/client/request-login', async (req, res) => {
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
     
-    // Log OTP to console for testing (only in development)
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('\n═══════════════════════════════════════');
-      console.log(`📧 OTP Generated for: ${email}`);
-      console.log(`🔑 OTP Code: ${otp}`);
-      console.log(`⏰ Expires at: ${expiresAt.toISOString()}`);
-      console.log('═══════════════════════════════════════\n');
+    // Log OTP for testing (only in development)
+    if (config.env !== 'production') {
+      logger.debug('OTP Generated', { email, otp, expiresAt: expiresAt.toISOString() });
     }
     
     // Store OTP with expiration (ensure OTP is stored as string)
     const otpString = String(otp).trim();
-    console.log('📝 Storing OTP:', { email, otp: otpString, expiresAt: expiresAt.toISOString() });
+    logger.debug('Storing OTP', { email, expiresAt: expiresAt.toISOString() });
     
     const users = await readUsers();
     // Remove any existing OTPs for this email
@@ -896,7 +1022,7 @@ app.post('/api/client/request-login', async (req, res) => {
       createdAt: new Date().toISOString() 
     });
     await writeUsers(filteredUsers);
-    console.log('✅ OTP stored successfully');
+    logger.debug('OTP stored successfully', { email });
     
     // Send OTP via email
     const emailHtml = `
@@ -933,16 +1059,16 @@ app.post('/api/client/request-login', async (req, res) => {
     };
     
     // Only exclude OTP in explicit production mode
-    if (process.env.NODE_ENV === 'production') {
+    if (config.env === 'production') {
       delete response.otp;
       delete response.debug;
       delete response.expiresAt;
     }
     
-    console.log('Sending response with OTP:', response.otp ? 'YES' : 'NO');
+    logger.debug('Sending OTP response', { email, hasOtp: !!response.otp });
     res.json(response);
   } catch (error) {
-    console.error('Request login error:', error);
+    logger.error('Request login error', error, { email });
     res.status(500).json({ error: 'Failed to send OTP code' });
   }
 });
@@ -971,7 +1097,7 @@ if (process.env.NODE_ENV !== 'production') {
         expiresIn: Math.floor((new Date(user.otpExpiresAt) - new Date()) / 1000 / 60) + ' minutes'
       });
     } catch (error) {
-      console.error('Get OTP error:', error);
+      logger.error('Get OTP error', error, { email: req.params.email });
       res.status(500).json({ error: 'Failed to get OTP' });
     }
   });
@@ -993,11 +1119,7 @@ app.post('/api/client/verify-otp', async (req, res) => {
       return res.status(400).json({ error: 'OTP must be 6 digits' });
     }
     
-    console.log('Verifying OTP:', {
-      email,
-      receivedOtp: normalizedOtp,
-      receivedType: typeof otp
-    });
+    logger.debug('Verifying OTP', { email, receivedType: typeof otp });
     
     const users = await readUsers();
     const user = users.find(u => {
@@ -1005,13 +1127,10 @@ app.post('/api/client/verify-otp', async (req, res) => {
       const emailMatch = u.email === email;
       const otpMatch = storedOtp === normalizedOtp;
       
-      console.log('Checking user:', {
-        email: u.email,
-        emailMatch,
-        storedOtp,
-        otpMatch,
-        hasOtp: !!u.otp
-      });
+      // Checking user OTP match (debug only)
+      if (config.env !== 'production') {
+        logger.debug('Checking user OTP', { email: u.email, emailMatch, otpMatch, hasOtp: !!u.otp });
+      }
       
       return emailMatch && otpMatch;
     });
@@ -1019,7 +1138,7 @@ app.post('/api/client/verify-otp', async (req, res) => {
     if (!user) {
       // Log all OTPs for this email for debugging
       const userOtps = users.filter(u => u.email === email);
-      console.log('User OTPs found for email:', userOtps.map(u => ({
+      logger.debug('User OTPs found', { email, count: userOtps.length, otps: userOtps.map(u => ({
         otp: u.otp,
         expiresAt: u.otpExpiresAt,
         expired: u.otpExpiresAt ? new Date(u.otpExpiresAt) < new Date() : false
@@ -1051,14 +1170,14 @@ app.post('/api/client/verify-otp', async (req, res) => {
         expiresAt: expiresAt.toISOString()
       };
       await writeUsers(users);
-      console.log('✅ OTP verified and session created for:', email);
+      logger.info('OTP verified and session created', { email });
     } else {
-      console.error('❌ User not found after verification - this should not happen');
+      logger.error('User not found after verification', { email });
     }
     
     res.json({ success: true, token: sessionToken, message: 'Login successful' });
   } catch (error) {
-    console.error('Verify OTP error:', error);
+    logger.error('Verify OTP error', error, { email });
     res.status(500).json({ error: 'Failed to verify OTP' });
   }
 });
@@ -1220,17 +1339,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.post('/api/contact', upload.array('files', 5), async (req, res) => {
+app.post('/api/contact', upload.array('files', 5), validateUploadedFile, validateFileUpload, validateContactInput, async (req, res) => {
   try {
-    const { errors, sanitized } = validateContactInput(req.body);
-    
-    if (errors.length > 0) {
-      return res.status(400).json({ 
-        success: false, 
-        error: errors.join(', ') 
-      });
-    }
-
+    // req.body is already sanitized by validateContactInput middleware
     const caseId = generateCaseId();
     
     let files = [];
@@ -1247,7 +1358,7 @@ app.post('/api/contact', upload.array('files', 5), async (req, res) => {
 
     const lead = {
       id: caseId,
-      ...sanitized,
+      ...req.body,
       files,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -1267,7 +1378,12 @@ app.post('/api/contact', upload.array('files', 5), async (req, res) => {
       <p>We will review and contact you within 24 hours.</p>
       <p>Login to track your case status: ${req.protocol}://${req.get('host')}/client-login.html</p>
     `;
-    await sendEmail(sanitized.email, `Case Created: ${caseId}`, emailHtml);
+    try {
+      await sendEmail(req.body.email, `Case Created: ${caseId}`, emailHtml);
+    } catch (emailError) {
+      // Log email error but don't fail the form submission
+      logger.error('Failed to send confirmation email, but case was saved', emailError, { caseId });
+    }
 
     res.json({ 
       success: true, 
@@ -1276,7 +1392,7 @@ app.post('/api/contact', upload.array('files', 5), async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Contact form error:', error);
+    logger.error('Contact form error', error, { ip: req.ip });
     res.status(500).json({ 
       success: false, 
       error: 'Internal server error' 
@@ -1284,6 +1400,7 @@ app.post('/api/contact', upload.array('files', 5), async (req, res) => {
   }
 });
 
+// Case status endpoint (rate limiting applied via middleware above)
 app.get('/api/case/:caseId', async (req, res) => {
   try {
     const { caseId } = req.params;
@@ -1314,7 +1431,7 @@ app.get('/api/case/:caseId', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Get case error:', error);
+    logger.error('Get case error', error, { caseId: req.params.caseId });
     res.status(500).json({ 
       success: false, 
       error: 'Internal server error' 
@@ -1326,7 +1443,9 @@ app.get('/api/case/:caseId', async (req, res) => {
 const crypto = require('crypto');
 
 const tmpUploadDir = path.join(__dirname, 'uploads', 'tmp');
-fs.mkdir(tmpUploadDir, { recursive: true }).catch(console.error);
+fs.mkdir(tmpUploadDir, { recursive: true }).catch((err) => {
+  logger.error('Failed to create temp upload directory', err);
+});
 
 const assetReclaimUpload = multer({
   dest: tmpUploadDir,
@@ -1340,7 +1459,8 @@ const assetReclaimUpload = multer({
 
 const generateAssetReclaimCaseId = () => 'AR-' + crypto.randomBytes(6).toString('hex').toUpperCase();
 
-app.post('/api/asset-reclaim', assetReclaimUpload.array('files', 5), async (req, res) => {
+// Asset reclaim endpoint (rate limiting applied via middleware above)
+app.post('/api/asset-reclaim', assetReclaimUpload.array('files', 5), validateUploadedFile, async (req, res) => {
   try {
     const { company, contactName, email, phone, propertyAddress, details } = req.body;
     if (!company || !contactName || !email || !details) {
@@ -1379,16 +1499,29 @@ app.post('/api/asset-reclaim', assetReclaimUpload.array('files', 5), async (req,
       details,
       files: savedFiles,
       createdAt: new Date().toISOString(),
-      status: 'new',
-      updates: []
+      status: 'new'
     };
 
     existing.push(record);
     await fs.promises.writeFile(casesPath, JSON.stringify(existing, null, 2));
 
-    res.json({ ok: true, caseId });
+    // Send confirmation email to client
+    const emailHtml = `
+      <h2>Asset Reclaim Case Submitted Successfully</h2>
+      <p>Your asset reclaim case ${caseId} has been received by Sleuthservice.</p>
+      <p>We will review and contact you within 24 hours.</p>
+      <p>Login to track your case status: ${req.protocol}://${req.get('host')}/client-login.html</p>
+    `;
+    try {
+      await sendEmail(email, `Asset Reclaim Case Created: ${caseId}`, emailHtml);
+    } catch (emailError) {
+      // Log email error but don't fail the form submission
+      logger.error('Failed to send asset reclaim confirmation email, but case was saved', emailError, { caseId });
+    }
+
+    res.json({ success: true, caseId });
   } catch (err) {
-    console.error('asset-reclaim error', err);
+    logger.error('Asset reclaim error', err, { ip: req.ip });
     if (req.files) {
       for (const f of req.files) {
         try { await fs.promises.unlink(f.path); } catch (e) {}
@@ -1409,7 +1542,7 @@ let errorHandler = (err, req, res, next) => {
       return res.status(400).json({ error: 'Too many files' });
     }
   }
-  console.error('Unhandled error:', err);
+  logger.error('Unhandled error', err);
   if (logError) {
     logError(err, { method: req.method, path: req.path, ip: req.ip }).catch(() => {});
   }
@@ -1423,11 +1556,11 @@ try {
   cleanOldErrorLogs = errorHandlerModule.cleanOldErrorLogs;
   
   // Clean old error logs on startup
-  cleanOldErrorLogs(30).catch(err => console.warn('Error log cleanup warning:', err));
-  console.log('✅ Error tracking system initialized');
+  cleanOldErrorLogs(30).catch(err => logger.warn('Error log cleanup warning', err));
+  logger.info('Error tracking system initialized');
 } catch (error) {
-  console.warn('⚠️  Error handler module not available, using basic error logging');
-  logError = async (err, ctx) => console.error('Error:', err.message || err, ctx);
+  logger.warn('Error handler module not available, using basic error logging');
+  logError = async (err, ctx) => logger.error('Error', err, ctx);
   getErrorStats = async () => ({ total: 0, byType: {}, byDay: {}, recent: [] });
   cleanOldErrorLogs = async () => 0;
 }
@@ -1439,7 +1572,7 @@ app.get('/api/admin/errors/stats', authenticateAdmin, async (req, res) => {
     const stats = await getErrorStats(days);
     res.json({ success: true, stats });
   } catch (error) {
-    console.error('Error stats endpoint error:', error);
+    logger.error('Error stats endpoint error', error);
     if (logError) {
       await logError(error, { endpoint: '/api/admin/errors/stats' }).catch(() => {});
     }
@@ -1470,26 +1603,30 @@ const startServer = async () => {
   if (httpsEnabled && httpsServer) {
     // Start HTTPS server
     httpsServer.listen(PORT, () => {
-      console.log('🔒 Sleuthservice HTTPS server running on https://localhost:' + PORT);
-      console.log('✅ Health check: https://localhost:' + PORT + '/api/health');
-      console.log('⚠️  Browser will show security warning (self-signed cert) - click "Advanced" → "Proceed"');
-      console.log('🔒 Security features: Enabled');
+      logger.info(`Sleuthservice HTTPS server running on https://localhost:${PORT}`);
+      logger.info(`Health check: https://localhost:${PORT}/api/health`);
+      logger.warn('Browser will show security warning (self-signed cert) - click "Advanced" → "Proceed"');
+      logger.info('Security features: Enabled');
     });
     
     // Also start HTTP server on port 3001 as fallback (for browsers that reject self-signed certs)
     const httpPort = 3001;
     app.listen(httpPort, () => {
-      console.log('🚀 HTTP fallback server running on http://localhost:' + httpPort);
-      console.log('💡 Use http://localhost:' + httpPort + ' if HTTPS gives connection issues');
+      logger.info(`HTTP fallback server running on http://localhost:${httpPort}`);
+      logger.info(`Environment: ${config.env}`);
+      logger.info(`Use http://localhost:${httpPort} if HTTPS gives connection issues`);
     });
   } else {
     app.listen(PORT, () => {
-      console.log('🚀 Sleuthservice HTTP server running on http://localhost:' + PORT);
-      console.log('✅ Health check: http://localhost:' + PORT + '/api/health');
-      console.log('⚠️  Running without HTTPS (for production, use SSL)');
-      console.log('🔒 Security features: Enabled');
+      logger.info(`Sleuthservice HTTP server running on http://localhost:${PORT}`);
+      logger.info(`Health check: http://localhost:${PORT}/api/health`);
+      logger.warn('Running without HTTPS (for production, use SSL)');
+      logger.info('Security features: Enabled');
     });
   }
 };
 
-startServer().catch(console.error);
+startServer().catch((error) => {
+  logger.error('Failed to start server', error);
+  process.exit(1);
+});

@@ -10,10 +10,45 @@
     <meta property="og:description" content="Learn about Sleuthservice - Professional asset recovery and financial investigations.">
     <meta property="og:url" content="https://sleuthservice.com/about.html">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Sleuthservice">
+    <meta property="og:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us - Sleuthservice">
+    <meta name="twitter:description" content="Learn about Sleuthservice - Professional asset recovery and financial investigations.">
+    <meta name="twitter:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta name="keywords" content="about sleuthservice, investigative services, asset recovery company, financial investigations">
+    <meta name="author" content="Sleuthservice">
+    <meta name="robots" content="index, follow">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <script src="icons.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Sleuthservice",
+      "description": "Learn about Sleuthservice - Professional asset recovery and financial investigations.",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Sleuthservice",
+        "url": "https://sleuthservice.com",
+        "description": "Professional investigative services including corporate due diligence, digital forensics, surveillance and litigation support."
+      }
+    }
+    </script>
     <script src="terms-acceptance.js" defer></script>
     <style>
+        /* Ensure scrolling works */
+        html, body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -75,6 +110,24 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
             transition: all 0.3s ease;
+        }
+        
+        .feature-icon [data-icon],
+        .feature-icon span {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .feature-icon svg {
+            display: block !important;
+            margin: auto !important;
+            width: 100% !important;
+            height: 100% !important;
         }
         
         .feature-icon:hover {
@@ -279,27 +332,27 @@
                     
                     <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">🔍</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="search" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>20+ years combined investigative experience</span>
                         </div>
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">💻</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="document" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>Certified digital forensics specialists</span>
                         </div>
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">🌍</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="globe" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>Global network of investigative resources</span>
                         </div>
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">🔒</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="lock" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>Strict confidentiality protocols</span>
                         </div>
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">⚖️</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="document" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>Legal and compliance expertise</span>
                         </div>
                         <div class="expertise-item">
-                            <div style="font-size: 1.5rem;">📊</div>
+                            <div style="font-size: 1.5rem;"><span data-icon="document" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                             <span>Comprehensive reporting and documentation</span>
                         </div>
                     </div>
@@ -318,7 +371,7 @@
                     
                     <div class="card approach-card" style="animation-delay: 0.3s;">
                         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-                            <div class="feature-icon">✅</div>
+                            <div class="feature-icon"><span data-icon="check" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                             <h3 style="margin: 0;">Evidence Integrity</h3>
                         </div>
                         <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text);">
@@ -353,18 +406,18 @@
                 <div class="footer-section">
                     <h3>Sleuthservice</h3>
                     <p>Professional asset recovery and financial investigations with complete confidentiality and precision. Your trusted partner for corporate due diligence, digital forensics, and litigation support.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;">🔒 Confidentiality Guaranteed</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Confidentiality Guaranteed</p>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">🏠 Home</a></li>
-                        <li><a href="asset-reclaim.html">💰 Asset Reclaim</a></li>
-                        <li><a href="about.html">ℹ️ About Us</a></li>
-                        <li><a href="client-login.html">🔐 Client Login</a></li>
-                        <li><a href="admin-login.html">⚙️ Admin Portal</a></li>
+                        <li><a href="index.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Home</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="money" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Asset Reclaim</a></li>
+                        <li><a href="about.html"><span data-icon="info" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> About Us</a></li>
+                        <li><a href="client-login.html"><span data-icon="lock" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Client Login</a></li>
+                        <li><a href="admin-login.html"><span data-icon="settings" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Admin Portal</a></li>
                     </ul>
                 </div>
 
@@ -372,12 +425,12 @@
                 <div class="footer-section">
                     <h3>Our Services</h3>
                     <ul class="footer-links">
-                        <li><a href="asset-reclaim.html">💼 Corporate Asset Recovery</a></li>
-                        <li><a href="asset-reclaim.html">🏠 Property Reclaim Services</a></li>
-                        <li><a href="index.html">🔍 Digital Forensics</a></li>
-                        <li><a href="index.html">📋 Due Diligence</a></li>
-                        <li><a href="index.html">🕵️ Surveillance & Asset Tracing</a></li>
-                        <li><a href="index.html">⚖️ Litigation Support</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="briefcase" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Corporate Asset Recovery</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Property Reclaim Services</a></li>
+                        <li><a href="index.html"><span data-icon="search" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Digital Forensics</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Due Diligence</a></li>
+                        <li><a href="index.html"><span data-icon="tracking" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Surveillance & Asset Tracing</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Litigation Support</a></li>
                     </ul>
                 </div>
 
@@ -386,19 +439,19 @@
                     <h3>Contact Us</h3>
                     <div class="footer-contact">
                         <div class="footer-contact-item">
-                            <span role="img">📧</span>
+                            <span data-icon="email" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <a href="mailto:noreply@sleuthservice.com" style="color: var(--text-light); text-decoration: none;">noreply@sleuthservice.com</a>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🌍</span>
+                            <span data-icon="globe" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Global Reach - International Network</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">⚡</span>
+                            <span data-icon="lightning" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>24-48 Hour Response Time</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🔒</span>
+                            <span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Bank-Level Security & Encryption</span>
                         </div>
                     </div>

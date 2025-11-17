@@ -11,8 +11,44 @@
     <meta property="og:url" content="https://sleuthservice.com/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Sleuthservice">
+    <meta property="og:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sleuthservice - Asset Recovery & Financial Investigations">
+    <meta name="twitter:description" content="Professional investigative services including corporate due diligence, digital forensics, surveillance and litigation support.">
+    <meta name="twitter:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta name="keywords" content="asset recovery, financial investigations, corporate due diligence, digital forensics, surveillance, litigation support, private investigation">
+    <meta name="author" content="Sleuthservice">
+    <meta name="robots" content="index, follow">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <script src="icons.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Sleuthservice",
+      "description": "Professional investigative services including corporate due diligence, digital forensics, surveillance and litigation support.",
+      "url": "https://sleuthservice.com",
+      "logo": "https://sleuthservice.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+44-123-456-7890",
+        "contactType": "Customer Service",
+        "email": "noreply@sleuthservice.com"
+      },
+      "areaServed": "Worldwide",
+      "serviceType": [
+        "Asset Recovery",
+        "Financial Investigations",
+        "Corporate Due Diligence",
+        "Digital Forensics",
+        "Surveillance",
+        "Litigation Support"
+      ],
+      "priceRange": "$$"
+    }
+    </script>
     <style>
         @keyframes fadeInUp {
             from {
@@ -70,6 +106,24 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
             transition: all 0.3s ease;
+        }
+        
+        .feature-icon [data-icon],
+        .feature-icon span {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .feature-icon svg {
+            display: block !important;
+            margin: auto !important;
+            width: 100% !important;
+            height: 100% !important;
         }
         
         .feature-icon:hover {
@@ -177,7 +231,7 @@
         </div>
     </header>
 
-    <main class="main">
+    <main class="main" id="main-content" role="main">
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
@@ -188,29 +242,29 @@
                 <div class="grid" style="gap: 2.5rem; margin-bottom: 3rem;">
                     <div class="card" style="animation-delay: 0.1s;">
                         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-                            <div class="feature-icon">🔒</div>
+                            <div class="feature-icon"><span data-icon="lock" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                             <h3 style="margin: 0;">Our Services</h3>
                         </div>
                         <ul class="services-list" style="color: #ffffff;">
-                            <li style="color: #ffffff;">✅ Corporate due diligence</li>
-                            <li style="color: #ffffff;">✅ Digital forensics</li>
-                            <li style="color: #ffffff;">✅ Surveillance & asset tracing</li>
-                            <li style="color: #ffffff;">✅ Background screening</li>
-                            <li style="color: #ffffff;">✅ Litigation support</li>
-                            <li style="color: #ffffff;">✅ Confidential investigations</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Corporate due diligence</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Digital forensics</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Surveillance & asset tracing</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Background screening</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Litigation support</li>
+                            <li style="color: #ffffff;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Confidential investigations</li>
                         </ul>
                         
                         <div class="features" style="grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem;">
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">⚡ 24-48 Hour Response</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="lightning" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> 24-48 Hour Response</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">Quick case assessment</span>
                             </div>
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔐 Secure Communication</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Secure Communication</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">Encrypted channels</span>
                             </div>
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🌍 Global Reach</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="globe" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Global Reach</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">International network</span>
                             </div>
                         </div>
@@ -218,7 +272,7 @@
 
                     <div class="card" style="animation-delay: 0.2s;">
                         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-                            <div class="feature-icon">📋</div>
+                            <div class="feature-icon"><span data-icon="document" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                             <h3 style="margin: 0;">Start a Confidential Conversation</h3>
                         </div>
                         <p class="card-description" style="color: #ffffff; font-weight: 500;">Submit your case securely. All information is encrypted and protected with bank-level security.</p>
@@ -230,7 +284,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="email" name="email" placeholder="Email Address *" required>
+                                <input type="email" name="email" placeholder="Email Address *" required style="color: #000000 !important;">
                             </div>
 
                             <div class="form-group">
@@ -275,7 +329,7 @@
                 <!-- Case Status Checker -->
                 <div class="card status-checker" style="animation-delay: 0.3s;">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                        <div class="feature-icon">🔍</div>
+                        <div class="feature-icon"><span data-icon="search" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                         <h3 style="margin: 0;">Check Case Status</h3>
                     </div>
 
@@ -292,25 +346,25 @@
         </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <!-- Company Info -->
                 <div class="footer-section">
                     <h3>Sleuthservice</h3>
                     <p>Professional asset recovery and financial investigations with complete confidentiality and precision. Your trusted partner for corporate due diligence, digital forensics, and litigation support.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;">🔒 Confidentiality Guaranteed</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Confidentiality Guaranteed</p>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">🏠 Home</a></li>
-                        <li><a href="asset-reclaim.html">💰 Asset Reclaim</a></li>
-                        <li><a href="about.html">ℹ️ About Us</a></li>
-                        <li><a href="client-login.html">🔐 Client Login</a></li>
-                        <li><a href="admin-login.html">⚙️ Admin Portal</a></li>
+                        <li><a href="index.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Home</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="money" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Asset Reclaim</a></li>
+                        <li><a href="about.html"><span data-icon="info" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> About Us</a></li>
+                        <li><a href="client-login.html"><span data-icon="lock" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Client Login</a></li>
+                        <li><a href="admin-login.html"><span data-icon="settings" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Admin Portal</a></li>
                     </ul>
                 </div>
 
@@ -318,12 +372,12 @@
                 <div class="footer-section">
                     <h3>Our Services</h3>
                     <ul class="footer-links">
-                        <li><a href="asset-reclaim.html">💼 Corporate Asset Recovery</a></li>
-                        <li><a href="asset-reclaim.html">🏠 Property Reclaim Services</a></li>
-                        <li><a href="index.html">🔍 Digital Forensics</a></li>
-                        <li><a href="index.html">📋 Due Diligence</a></li>
-                        <li><a href="index.html">🕵️ Surveillance & Asset Tracing</a></li>
-                        <li><a href="index.html">⚖️ Litigation Support</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="briefcase" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Corporate Asset Recovery</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Property Reclaim Services</a></li>
+                        <li><a href="index.html"><span data-icon="search" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Digital Forensics</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Due Diligence</a></li>
+                        <li><a href="index.html"><span data-icon="tracking" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Surveillance & Asset Tracing</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Litigation Support</a></li>
                     </ul>
                 </div>
 
@@ -332,19 +386,19 @@
                     <h3>Contact Us</h3>
                     <div class="footer-contact">
                         <div class="footer-contact-item">
-                            <span role="img">📧</span>
+                            <span data-icon="email" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <a href="mailto:noreply@sleuthservice.com" style="color: var(--text-light); text-decoration: none;">noreply@sleuthservice.com</a>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🌍</span>
+                            <span data-icon="globe" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Global Reach - International Network</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">⚡</span>
+                            <span data-icon="lightning" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>24-48 Hour Response Time</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🔒</span>
+                            <span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Bank-Level Security & Encryption</span>
                         </div>
                     </div>
@@ -362,7 +416,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script>
         if (document.getElementById('currentYear')) {
             document.getElementById('currentYear').textContent = new Date().getFullYear();

@@ -245,21 +245,33 @@ class CaseStatus {
             `;
         }
 
+        // Escape user data to prevent XSS
+        const escapeHtml = (text) => {
+            if (typeof text !== 'string') return String(text);
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '/': '&#x2F;' };
+            return text.replace(/[&<>"'/]/g, (char) => map[char]);
+        };
+        
+        const safeId = escapeHtml(caseData.id);
+        const safeService = escapeHtml(caseData.service || 'Not specified');
+        const safeStatus = escapeHtml(this.formatStatus(caseData.status));
+        const safeDate = new Date(caseData.createdAt).toLocaleDateString();
+        
         this.statusDiv.innerHTML = `
             <div class="case-details">
-                <h4>Case ${caseData.id}</h4>
+                <h4>Case ${safeId}</h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <strong>Status</strong>
-                        <div style="color: ${statusColor}">${this.formatStatus(caseData.status)}</div>
+                        <div style="color: ${statusColor}">${safeStatus}</div>
                     </div>
                     <div>
                         <strong>Created</strong>
-                        <div>${new Date(caseData.createdAt).toLocaleDateString()}</div>
+                        <div>${safeDate}</div>
                     </div>
                     <div>
                         <strong>Service</strong>
-                        <div>${caseData.service || 'Not specified'}</div>
+                        <div>${safeService}</div>
                     </div>
                 </div>
                 ${updatesHtml}
@@ -286,9 +298,17 @@ class CaseStatus {
     }
 
     showError(message) {
+        // Escape error message to prevent XSS
+        const escapeHtml = (text) => {
+            if (typeof text !== 'string') return String(text);
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '/': '&#x2F;' };
+            return text.replace(/[&<>"'/]/g, (char) => map[char]);
+        };
+        
+        const safeMessage = escapeHtml(message);
         this.statusDiv.innerHTML = `
             <div class="form-status status-error">
-                ❌ ${message}
+                ❌ ${safeMessage}
             </div>
         `;
     }
@@ -345,8 +365,40 @@ class Utilities {
     }
 }
 
+// Function to set active nav link based on current page
+function setActiveNavLink() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    if (navLinks.length === 0) return;
+
+    // Get current page path
+    const currentPath = window.location.pathname;
+    const currentPage = currentPath.split('/').pop() || 'index.html';
+    
+    // Handle root/index page
+    const isIndexPage = currentPage === '' || currentPage === 'index.html' || currentPage === '/' || currentPath.endsWith('/');
+
+    navLinks.forEach(link => {
+        // Remove active class from all links
+        link.classList.remove('active');
+        
+        // Get the href and normalize it
+        const href = link.getAttribute('href');
+        const linkPage = href.split('/').pop();
+        
+        // Check if this link matches the current page
+        if (isIndexPage && (linkPage === 'index.html' || linkPage === '')) {
+            link.classList.add('active');
+        } else if (!isIndexPage && linkPage === currentPage) {
+            link.classList.add('active');
+        }
+    });
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Set active nav link
+    setActiveNavLink();
+
     // Initialize utilities
     Utilities.init();
 

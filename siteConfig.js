@@ -1,6 +1,6 @@
 /**
  * siteConfig.js
- * Aesus Asset Reclaim Website Configuration
+ * Sleuthservice Website Configuration
  * 
  * This file contains all site-wide configuration including company information,
  * contact details, statistics, and helper functions to apply these settings
@@ -22,11 +22,11 @@ var siteConfig = {
 
   // Main company information - used throughout the site
   company: {
-    name: "Aesus Asset Reclaim",
+    name: "Sleuthservice",
     tagline: "Recovering what's rightfully yours",
     slogan: "Asset Recovery & Financial Investigations",
     description:
-      "Aesus Asset Reclaim is a US-based professional asset recovery and financial investigation company. We specialize in locating and reclaiming lost, unclaimed, or misappropriated assets for individuals, families, and organizations across the United States.",
+      "Sleuthservice is a professional asset recovery and financial investigation company. We specialize in locating and reclaiming lost, unclaimed, or misappropriated assets for individuals, families, and organizations.",
     industry: "Asset Recovery & Investigations",
     // Key statistics displayed on homepage and throughout site
     // These values are automatically inserted into elements with data-stat attributes
@@ -43,13 +43,13 @@ var siteConfig = {
       secondaryLink: "/track-case"
     },
     location: "United States",
-    email: "contact@aesusinvestigators.com",
+    email: "noreply@sleuthservice.com",
     phone: "+1 (951) 224-3746"
   },
 
   // Contact information - automatically applied to all [data-email] and [data-phone] elements
   contact: {
-    email: "contact@aesusinvestigators.com",  // Main contact email
+    email: "noreply@sleuthservice.com",  // Main contact email
     phone: "+1 (951) 224-3746",               // Main contact phone (US format)
     officeHours: "Mon–Fri, 9am–6pm (EST)",    // Business hours (Eastern Standard Time)
     form: {
@@ -63,17 +63,17 @@ var siteConfig = {
       ],
       submitText: "Submit Enquiry",
       successMessage:
-        "Thank you for contacting Aesus Asset Reclaim. A licensed investigator will respond within 24 hours."
+        "Thank you for contacting Sleuthservice. A licensed investigator will respond within 24 hours."
     },
     socials: {
-      facebook: "https://facebook.com/aesusassetreclaim",
-      linkedin: "https://linkedin.com/company/aesusassetreclaim",
-      twitter: "https://twitter.com/aesusinvest"
+      facebook: "https://facebook.com/sleuthservice",
+      linkedin: "https://linkedin.com/company/sleuthservice",
+      twitter: "https://twitter.com/sleuthservice"
     }
   },
 
   footer: {
-    text: "© 2025 Aesus Asset Reclaim. All rights reserved.",
+    text: "© 2025 Sleuthservice. All rights reserved.",
     builtBy:
       "Website crafted with precision and passion by Little Einstein Studios."
   }
@@ -97,6 +97,8 @@ function applySiteConfig() {
   if (document.title && document.title.includes('Aesus')) {
     document.title = document.title.replace(/Aesus Asset Reclaim/g, siteConfig.company.name);
   }
+  // Also replace any remaining Aesus references
+  document.title = document.title.replace(/Aesus/g, siteConfig.company.name);
   
   // Update company name throughout the page
   // Finds all elements with [data-company-name] attribute and updates text

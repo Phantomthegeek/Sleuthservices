@@ -10,9 +10,45 @@
     <meta property="og:description" content="Professional asset reclaim services with secure case submission and confidential handling.">
     <meta property="og:url" content="https://sleuthservice.com/asset-reclaim.html">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Sleuthservice">
+    <meta property="og:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Asset Reclaim Services - Sleuthservice">
+    <meta name="twitter:description" content="Professional asset reclaim services with secure case submission and confidential handling.">
+    <meta name="twitter:image" content="https://sleuthservice.com/og-image.jpg">
+    <meta name="keywords" content="asset reclaim, asset recovery, financial asset tracing, property reclaim, corporate asset recovery">
+    <meta name="author" content="Sleuthservice">
+    <meta name="robots" content="index, follow">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <script src="icons.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Asset Reclaim Services",
+      "description": "Professional asset reclaim services with secure case submission and confidential handling.",
+      "provider": {
+        "@type": "Organization",
+        "name": "Sleuthservice",
+        "url": "https://sleuthservice.com"
+      },
+      "areaServed": "Worldwide",
+      "serviceType": "Asset Recovery"
+    }
+    </script>
     <style>
+        /* Ensure scrolling works */
+        html, body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
         .hero-content h2 {
             font-size: 3.5rem;
             font-weight: 800;
@@ -562,6 +598,7 @@
             border-radius: 1.25rem;
             text-align: center;
             border: 2px solid rgba(30, 64, 175, 0.1);
+            color: #000000;
             transition: all 0.3s ease;
         }
         
@@ -671,6 +708,24 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 8px 24px rgba(30, 64, 175, 0.2);
             transition: all 0.3s ease;
+        }
+        
+        .feature-icon [data-icon],
+        .feature-icon span {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .feature-icon svg {
+            display: block !important;
+            margin: auto !important;
+            width: 100% !important;
+            height: 100% !important;
         }
         
         .feature-icon:hover {
@@ -855,7 +910,7 @@
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="client-login.html" class="nav-link">Client Login</a>
                 <a href="about.html" class="nav-link">About</a>
-                <a href="asset-reclaim.html" class="nav-link active">Asset Reclaim</a>
+                <a href="asset-reclaim.html" class="nav-link">Asset Reclaim</a>
             </nav>
         </div>
     </header>
@@ -893,42 +948,42 @@
                     
                     <!-- Urgency Banner -->
                     <div class="urgency-banner">
-                        <strong>⚡ Free Assessment Limited</strong>
+                        <strong><span data-icon="lightning" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Free Assessment Limited</strong>
                         <span>Only 47 slots remaining this month. Start your free case evaluation now!</span>
                     </div>
                     
                     <!-- Social Proof -->
                     <div class="social-proof">
-                        <div class="social-proof-text">✅ <strong>5 people</strong> started asset reclaim cases today</div>
+                        <div class="social-proof-text"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> <strong>5 people</strong> started asset reclaim cases today</div>
                         <div style="font-size: 0.9rem; color: var(--text-light);">Join hundreds of satisfied clients who recovered their assets</div>
                     </div>
                 </div>
 
                 <!-- No Win No Fee Guarantee -->
                 <div class="guarantee-badge">
-                    <h3>💯 No Win, No Fee Guarantee</h3>
+                    <h3><span data-icon="check" style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; margin-right: 0.5rem;"></span> No Win, No Fee Guarantee</h3>
                     <p>100% free assessment. We only get paid when you recover your assets. No hidden fees, no upfront costs, completely risk-free.</p>
                 </div>
 
                 <!-- Service Categories -->
                 <div class="service-categories">
                     <div class="service-category">
-                        <div class="service-category-icon">🏢</div>
+                        <div class="service-category-icon"><span data-icon="briefcase" style="display: inline-block; width: 32px; height: 32px;"></span></div>
                         <h4>Corporate Assets</h4>
                         <p>Recover unclaimed dividends, bonds, stocks, and corporate entitlements</p>
                     </div>
                     <div class="service-category">
-                        <div class="service-category-icon">🏠</div>
+                        <div class="service-category-icon"><span data-icon="home" style="display: inline-block; width: 32px; height: 32px;"></span></div>
                         <h4>Property Reclaims</h4>
                         <p>Recover lost deposits, property bonds, and real estate assets</p>
                     </div>
                     <div class="service-category">
-                        <div class="service-category-icon">💰</div>
+                        <div class="service-category-icon"><span data-icon="money" style="display: inline-block; width: 32px; height: 32px;"></span></div>
                         <h4>Financial Assets</h4>
                         <p>Trace and recover bank accounts, investments, and pension funds</p>
                     </div>
                     <div class="service-category">
-                        <div class="service-category-icon">📋</div>
+                        <div class="service-category-icon"><span data-icon="document" style="display: inline-block; width: 32px; height: 32px;"></span></div>
                         <h4>Legal Recovery</h4>
                         <p>Recover assets from legal disputes, inheritance, and settlements</p>
                     </div>
@@ -957,7 +1012,7 @@
                 <!-- Transparent Process Timeline -->
                 <div class="card" style="animation-delay: 0.1s;">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-                        <div class="feature-icon">🔍</div>
+                        <div class="feature-icon"><span data-icon="search" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                         <h3 style="margin: 0;">How Asset Recovery Works</h3>
                     </div>
                     
@@ -1003,38 +1058,38 @@
                                 <span style="color: #000000; font-weight: 600;">Corporate asset recovery</span>
                             </div>
                             <div class="expertise-item">
-                                <div style="font-size: 1.5rem;">🏠</div>
+                                <div style="font-size: 1.5rem;"><span data-icon="home" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                                 <span style="color: #000000; font-weight: 600;">Property reclaim services</span>
                             </div>
                             <div class="expertise-item">
-                                <div style="font-size: 1.5rem;">💰</div>
+                                <div style="font-size: 1.5rem;"><span data-icon="money" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                                 <span style="color: #000000; font-weight: 600;">Financial asset tracing</span>
                             </div>
                             <div class="expertise-item">
-                                <div style="font-size: 1.5rem;">📋</div>
+                                <div style="font-size: 1.5rem;"><span data-icon="document" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                                 <span style="color: #000000; font-weight: 600;">Legal documentation support</span>
                             </div>
                             <div class="expertise-item">
-                                <div style="font-size: 1.5rem;">🔍</div>
+                                <div style="font-size: 1.5rem;"><span data-icon="search" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                                 <span style="color: #000000; font-weight: 600;">Asset verification & validation</span>
                             </div>
                             <div class="expertise-item">
-                                <div style="font-size: 1.5rem;">⚖️</div>
+                                <div style="font-size: 1.5rem;"><span data-icon="document" style="display: inline-block; width: 24px; height: 24px;"></span></div>
                                 <span style="color: #000000; font-weight: 600;">Litigation support services</span>
                             </div>
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔒 Confidential Process</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Confidential Process</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">All cases handled with utmost discretion</span>
                             </div>
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">👨‍⚖️ Expert Team</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="welcome" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Expert Team</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">Specialized asset recovery professionals</span>
                             </div>
                             <div class="modern-feature">
-                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;">🔐 Secure Handling</strong>
+                                <strong style="display: block; color: #000000; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Secure Handling</strong>
                                 <span style="font-size: 0.95rem; color: #1e293b;">Encrypted document submission</span>
                             </div>
                         </div>
@@ -1063,7 +1118,7 @@
 
                             <div class="form-group">
                                 <label>Email Address *</label>
-                                <input type="email" name="email" placeholder="your.email@company.com" required>
+                                <input type="email" name="email" placeholder="your.email@company.com" required style="color: #000000 !important;">
                             </div>
 
                             <div class="form-group">
@@ -1095,12 +1150,12 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary" id="assetSubmitBtn" style="width: 100%;">
-                                <span class="btn-text">🚀 Get Free Assessment - No Obligation</span>
+                                <span class="btn-text"><span data-icon="rocket" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Get Free Assessment - No Obligation</span>
                                 <span class="btn-loading" style="display: none;">Processing...</span>
                             </button>
 
                             <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
-                                ✅ 100% Free • ✅ No Win No Fee • ✅ 24hr Response
+                                <span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"></span> 100% Free • <span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"></span> No Win No Fee • <span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"></span> 24hr Response
                             </div>
 
                             <div id="assetReclaimStatus" class="form-status" aria-live="polite"></div>
@@ -1188,22 +1243,22 @@
                     <div class="contact-methods">
                         <div class="contact-method">
                             <div class="contact-icon">📧</div>
-                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Email Us</h4>
-                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Get a response within 24 hours</p>
+                            <h4 style="margin-bottom: 0.5rem; color: #000000 !important; font-weight: 700;">Email Us</h4>
+                            <p style="font-size: 0.95rem; color: #1e293b !important; margin-bottom: 1rem; font-weight: 500;">Get a response within 24 hours</p>
                             <a href="mailto:noreply@sleuthservice.com" class="btn btn-secondary" style="width: 100%;">Send Email</a>
                         </div>
                         
                         <div class="contact-method">
                             <div class="contact-icon">📱</div>
-                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Call Us</h4>
-                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Speak directly with our team</p>
+                            <h4 style="margin-bottom: 0.5rem; color: #000000 !important; font-weight: 700;">Call Us</h4>
+                            <p style="font-size: 0.95rem; color: #1e293b !important; margin-bottom: 1rem; font-weight: 500;">Speak directly with our team</p>
                             <a href="tel:+441234567890" class="btn btn-secondary" style="width: 100%;">+44 123 456 7890</a>
                         </div>
                         
                         <div class="contact-method">
                             <div class="contact-icon">💬</div>
-                            <h4 style="margin-bottom: 0.5rem; color: var(--text);">Live Chat</h4>
-                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Chat with us in real-time</p>
+                            <h4 style="margin-bottom: 0.5rem; color: #000000 !important; font-weight: 700;">Live Chat</h4>
+                            <p style="font-size: 0.95rem; color: #1e293b !important; margin-bottom: 1rem; font-weight: 500;">Chat with us in real-time</p>
                             <button class="btn btn-secondary" style="width: 100%;" onclick="alert('Live chat coming soon! For now, please use email or phone.')">Start Chat</button>
                         </div>
                     </div>
@@ -1212,7 +1267,7 @@
                 <!-- Case Status Checker -->
                 <div class="card status-checker" style="animation-delay: 0.6s;">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                        <div class="feature-icon">🔍</div>
+                        <div class="feature-icon"><span data-icon="search" style="display: inline-block; width: 48px; height: 48px;"></span></div>
                         <h3 style="margin: 0;">Check Asset Reclaim Case Status</h3>
                     </div>
                     <form id="checkAssetStatusForm" class="status-form">
@@ -1234,18 +1289,18 @@
                 <div class="footer-section">
                     <h3>Sleuthservice</h3>
                     <p>Professional asset recovery and financial investigations with complete confidentiality and precision. Your trusted partner for corporate due diligence, digital forensics, and litigation support.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;">🔒 Confidentiality Guaranteed</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: #06b6d4;"><span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span> Confidentiality Guaranteed</p>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">🏠 Home</a></li>
-                        <li><a href="asset-reclaim.html">💰 Asset Reclaim</a></li>
-                        <li><a href="about.html">ℹ️ About Us</a></li>
-                        <li><a href="client-login.html">🔐 Client Login</a></li>
-                        <li><a href="admin-login.html">⚙️ Admin Portal</a></li>
+                        <li><a href="index.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Home</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="money" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Asset Reclaim</a></li>
+                        <li><a href="about.html"><span data-icon="info" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> About Us</a></li>
+                        <li><a href="client-login.html"><span data-icon="lock" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Client Login</a></li>
+                        <li><a href="admin-login.html"><span data-icon="settings" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Admin Portal</a></li>
                     </ul>
                 </div>
 
@@ -1253,12 +1308,12 @@
                 <div class="footer-section">
                     <h3>Our Services</h3>
                     <ul class="footer-links">
-                        <li><a href="asset-reclaim.html">💼 Corporate Asset Recovery</a></li>
-                        <li><a href="asset-reclaim.html">🏠 Property Reclaim Services</a></li>
-                        <li><a href="index.html">🔍 Digital Forensics</a></li>
-                        <li><a href="index.html">📋 Due Diligence</a></li>
-                        <li><a href="index.html">🕵️ Surveillance & Asset Tracing</a></li>
-                        <li><a href="index.html">⚖️ Litigation Support</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="briefcase" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Corporate Asset Recovery</a></li>
+                        <li><a href="asset-reclaim.html"><span data-icon="home" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Property Reclaim Services</a></li>
+                        <li><a href="index.html"><span data-icon="search" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Digital Forensics</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Due Diligence</a></li>
+                        <li><a href="index.html"><span data-icon="tracking" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Surveillance & Asset Tracing</a></li>
+                        <li><a href="index.html"><span data-icon="document" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Litigation Support</a></li>
                     </ul>
                 </div>
 
@@ -1267,19 +1322,19 @@
                     <h3>Contact Us</h3>
                     <div class="footer-contact">
                         <div class="footer-contact-item">
-                            <span role="img">📧</span>
+                            <span data-icon="email" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <a href="mailto:noreply@sleuthservice.com" style="color: var(--text-light); text-decoration: none;">noreply@sleuthservice.com</a>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🌍</span>
+                            <span data-icon="globe" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Global Reach - International Network</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">⚡</span>
+                            <span data-icon="lightning" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>24-48 Hour Response Time</span>
                         </div>
                         <div class="footer-contact-item">
-                            <span role="img">🔒</span>
+                            <span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                             <span>Bank-Level Security & Encryption</span>
                         </div>
                     </div>
@@ -1470,7 +1525,7 @@
 
                     if (data.ok) {
                         this.setStatus('success', 
-                            `✅ Asset reclaim case ${data.caseId} submitted successfully!\n\n` +
+                            `<span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Asset reclaim case ${data.caseId} submitted successfully!\n\n` +
                             `We've sent a confirmation email and will review your case within 24 hours. ` +
                             `You'll receive a detailed assessment with recovery probability and next steps.`
                         );
@@ -1486,7 +1541,7 @@
                 } catch (error) {
                     console.error('Asset reclaim form submission error:', error);
                     this.setStatus('error', 
-                        `❌ Submission failed: ${error.message}. Please try again or contact us directly.`
+                        `<span data-icon="close" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Submission failed: ${error.message}. Please try again or contact us directly.`
                     );
                 } finally {
                     this.setLoading(false);
@@ -1526,6 +1581,13 @@
                 this.init();
             }
 
+            // Escape HTML to prevent XSS
+            escapeHtml(text) {
+                if (typeof text !== 'string') return String(text);
+                const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '/': '&#x2F;' };
+                return text.replace(/[&<>"'/]/g, (char) => map[char]);
+            }
+
             init() {
                 if (this.form) {
                     this.form.addEventListener('submit', (e) => this.checkStatus(e));
@@ -1553,7 +1615,7 @@
                         this.showError(data.error || 'Case not found');
                     }
                 } catch (error) {
-                    console.error('Asset case status check error:', error);
+                    // Asset case status check error (details not exposed)
                     this.showError('Failed to check status. Please try again.');
                 }
             }
@@ -1568,31 +1630,40 @@
 
                 const statusColor = statusColors[caseData.status] || '#6b7280';
                 
+                // Escape all user data to prevent XSS
+                const safeId = this.escapeHtml(caseData.id);
+                const safeStatus = this.escapeHtml(caseData.status);
+                const safeService = this.escapeHtml(caseData.service || 'Asset Reclaim');
+                
                 let updatesHtml = '';
                 if (caseData.updates && caseData.updates.length > 0) {
                     updatesHtml = `
                         <div class="case-updates">
                             <h5>Recent Updates:</h5>
-                            ${caseData.updates.slice(-3).map(update => `
+                            ${caseData.updates.slice(-3).map(update => {
+                                const safeMessage = this.escapeHtml(update.message || '');
+                                const safeUpdateStatus = this.escapeHtml(update.status || '');
+                                return `
                                 <div class="update-item">
-                                    <div class="update-message">${update.message}</div>
+                                    <div class="update-message">${safeMessage}</div>
                                     <div class="update-meta">
                                         <span>${new Date(update.date).toLocaleDateString()}</span>
-                                        <span style="color: ${statusColor}">${update.status}</span>
+                                        <span style="color: ${statusColor}">${safeUpdateStatus}</span>
                                     </div>
                                 </div>
-                            `).join('')}
+                            `;
+                            }).join('')}
                         </div>
                     `;
                 }
 
                 this.statusDiv.innerHTML = `
                     <div class="case-details">
-                        <h4>Asset Reclaim Case ${caseData.id}</h4>
+                        <h4>Asset Reclaim Case ${safeId}</h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
                             <div>
                                 <strong>Status</strong>
-                                <div style="color: ${statusColor}">${this.formatStatus(caseData.status)}</div>
+                                <div style="color: ${statusColor}">${this.formatStatus(safeStatus)}</div>
                             </div>
                             <div>
                                 <strong>Created</strong>
@@ -1600,7 +1671,7 @@
                             </div>
                             <div>
                                 <strong>Service</strong>
-                                <div>${caseData.service || 'Asset Reclaim'}</div>
+                                <div>${safeService}</div>
                             </div>
                         </div>
                         ${updatesHtml}
@@ -1610,10 +1681,10 @@
 
             formatStatus(status) {
                 const statusMap = {
-                    'new': '🆕 New',
-                    'in-progress': '🔄 In Progress',
-                    'completed': '✅ Completed',
-                    'on-hold': '⏸️ On Hold'
+                    'new': '<span data-icon="add" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> New',
+                    'in-progress': '<span data-icon="refresh" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> In Progress',
+                    'completed': '<span data-icon="check" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> Completed',
+                    'on-hold': '<span data-icon="time" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> On Hold'
                 };
                 return statusMap[status] || status;
             }
@@ -1627,9 +1698,11 @@
             }
 
             showError(message) {
+                // Escape error message to prevent XSS
+                const safeMessage = this.escapeHtml(message);
                 this.statusDiv.innerHTML = `
                     <div class="form-status status-error">
-                        ❌ ${message}
+                        ❌ ${safeMessage}
                     </div>
                 `;
             }
@@ -1645,5 +1718,6 @@
             console.log('Asset reclaim page initialized');
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

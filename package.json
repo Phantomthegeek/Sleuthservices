@@ -1,0 +1,20 @@
+{
+  "name": "sleuthservice",
+  "version": "1.0.0",
+  "description": "Sleuthservice - Asset Recovery & Financial Investigations",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "echo 'CSS minification - add your minifier here (e.g., cssnano)'",
+    "build:js": "echo 'JS minification - add your minifier here (e.g., terser)'",
+    "lint": "cd backend && npm run lint",
+    "format": "cd backend && npm run format"
+  },
+  "keywords": [
+    "sleuthservice",
+    "asset-recovery",
+    "investigations"
+  ],
+  "author": "Sleuthservice",
+  "license": "UNLICENSED"
+}
+

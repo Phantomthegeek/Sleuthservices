@@ -7,34 +7,33 @@
     <meta name="description" content="Secure client login portal for accessing case information and updates.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <script src="icons.js" defer></script>
     <script src="terms-acceptance.js" defer></script>
+    <script src="siteConfig.js" defer></script>
     <style>
         /* Client Login Page Specific Styles */
+        html, body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
         .login-page {
             min-height: 100vh;
+            height: auto;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 60%, #1e293b 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 2rem 1rem;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .login-page::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            pointer-events: none;
+            overflow-y: visible !important;
+            overflow-x: hidden;
         }
 
         @keyframes gradientShift {
@@ -66,21 +65,11 @@
             border-radius: 2rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(6, 182, 212, 0.3);
-            overflow: hidden;
+            overflow: visible;
             position: relative;
             z-index: 1;
             animation: slideUp 0.6s ease-out;
-        }
-        
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
-            z-index: 2;
+            margin: 2rem 0;
         }
 
         @keyframes slideUp {
@@ -103,7 +92,7 @@
 
         /* Left Side - Branding & Info */
         .login-branding {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             padding: 3rem;
             color: white;
             display: flex;
@@ -111,17 +100,6 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            border-right: 1px solid rgba(6, 182, 212, 0.2);
-        }
-        
-        .login-branding::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
         }
 
         .login-branding::before {
@@ -231,15 +209,116 @@
         }
 
         .feature-icon {
-            width: 24px;
-            height: 24px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            font-size: 1rem;
             flex-shrink: 0;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-sizing: border-box;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-branding .feature-icon,
+        .login-branding .feature-item .feature-icon,
+        .feature-list .feature-item .feature-icon {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1);
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+        
+        /* Force remove any box styling */
+        .feature-icon::before,
+        .feature-icon::after {
+            display: none !important;
+            content: none !important;
+            background: transparent !important;
+        }
+        
+        .feature-icon svg {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 48px !important;
+            max-height: 48px !important;
+            min-width: 48px !important;
+            min-height: 48px !important;
+            color: rgba(255, 255, 255, 1) !important;
+            stroke: rgba(255, 255, 255, 1) !important;
+            fill: none !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            overflow: visible !important;
+        }
+        
+        .feature-icon svg,
+        .feature-icon svg * {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+        
+        .feature-icon svg * {
+            stroke: rgba(255, 255, 255, 0.9) !important;
+            fill: none !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .feature-icon svg path,
+        .feature-icon svg circle,
+        .feature-icon svg rect,
+        .feature-icon svg line {
+            stroke: rgba(255, 255, 255, 1) !important;
+            stroke-width: 2 !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            fill: none !important;
+        }
+        
+        /* Force rect elements to be outline only */
+        .feature-icon svg rect {
+            fill: none !important;
+            fill-opacity: 0 !important;
+        }
+        
+        .feature-icon svg circle[fill="currentColor"],
+        .feature-icon svg circle[fill*="currentColor"],
+        .feature-icon svg circle[fill] {
+            fill: rgba(255, 255, 255, 0.9) !important;
+            stroke: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        /* Ensure feature icons are visible */
+        .feature-icon:empty::after {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 48px;
         }
 
         /* Right Side - Login Form */
@@ -263,7 +342,8 @@
         }
 
         .login-subtitle {
-            color: var(--text-light);
+            color: var(--text);
+            opacity: 0.9;
             font-size: 1rem;
             line-height: 1.6;
         }
@@ -309,7 +389,8 @@
         }
 
         .form-input-enhanced::placeholder {
-            color: var(--text-muted);
+            color: #6b7280 !important;
+            opacity: 1 !important;
         }
 
         .input-icon {
@@ -317,7 +398,8 @@
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-light);
+            color: var(--text);
+            opacity: 0.9;
             font-size: 1.2rem;
             pointer-events: none;
             transition: color 0.3s;
@@ -477,7 +559,8 @@
 
         .security-text {
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: #000000 !important;
+            opacity: 1;
             line-height: 1.5;
         }
 
@@ -485,7 +568,8 @@
             margin-top: 1.5rem;
             text-align: center;
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text);
+            opacity: 0.9;
         }
 
         .help-link a {
@@ -546,7 +630,7 @@
             <!-- Left Side: Branding & Features -->
             <div class="login-branding">
                 <div class="brand-content">
-                    <div class="brand-logo">Sleuthservice</div>
+                    <div class="brand-logo" data-company-name>Sleuthservice</div>
                     <p class="brand-tagline">
                         Your trusted partner for asset recovery and financial investigations. 
                         Access your case dashboard securely and stay updated on your case progress.
@@ -554,27 +638,27 @@
                     
                     <ul class="feature-list">
                         <li class="feature-item">
-                            <div class="feature-icon">📊</div>
+                            <div class="feature-icon" data-icon="tracking"></div>
                             <span>Real-time case status tracking</span>
                         </li>
                         <li class="feature-item">
-                            <div class="feature-icon">💬</div>
-                            <span>Secure messaging with your team</span>
+                            <div class="feature-icon" data-icon="email"></div>
+                            <span>Secure messaging with our team</span>
                         </li>
                         <li class="feature-item">
-                            <div class="feature-icon">📄</div>
+                            <div class="feature-icon" data-icon="document"></div>
                             <span>Download reports and documents</span>
                         </li>
                         <li class="feature-item">
-                            <div class="feature-icon">🔒</div>
+                            <div class="feature-icon" data-icon="lock"></div>
                             <span>Bank-level security & encryption</span>
                         </li>
                         <li class="feature-item">
-                            <div class="feature-icon">📱</div>
+                            <div class="feature-icon" data-icon="mobile"></div>
                             <span>Fully responsive mobile access</span>
                         </li>
                         <li class="feature-item">
-                            <div class="feature-icon">⚡</div>
+                            <div class="feature-icon" data-icon="notification"></div>
                             <span>Instant notifications & updates</span>
                         </li>
                     </ul>
@@ -595,15 +679,16 @@
                         <div class="form-group-enhanced">
                             <label for="email" class="form-label-enhanced">Email Address</label>
                             <div class="input-wrapper">
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    name="email" 
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
                                     class="form-input-enhanced"
                                     placeholder="your.email@example.com"
                                     required
                                     autocomplete="email"
                                     autofocus
+                                    style="color: #000000 !important;"
                                 >
                                 <span class="input-icon">✉️</span>
                             </div>
@@ -620,7 +705,7 @@
                     <div id="otpStep" style="display: none;">
                         <div style="text-align: center; margin-bottom: 2rem;">
                             <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3); animation: pulse 2s ease-in-out infinite;">
-                                📧
+                                <span data-icon="email" style="display: inline-block; width: 24px; height: 24px; vertical-align: middle;"></span>
                             </div>
                             <p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">
                                 We've sent a verification code to
@@ -631,22 +716,22 @@
                         <div class="form-group-enhanced">
                             <label for="otp" class="form-label-enhanced" style="text-align: center; font-size: 1.1rem;">Enter Verification Code</label>
                             <div class="input-wrapper" style="max-width: 400px; margin: 0 auto;">
-                                <input 
-                                    type="text" 
-                                    id="otp" 
-                                    name="otp" 
+                                <input
+                                    type="text"
+                                    id="otp"
+                                    name="otp"
                                     class="form-input-enhanced"
                                     placeholder="000000"
                                     maxlength="6"
                                     pattern="[0-9]{6}"
                                     required
-                                    autocomplete="one-time-code"
+                                    autocomplete="off"
                                     autofocus
-                                    style="text-align: center; letter-spacing: 0.8rem; font-size: 2rem; font-family: 'Courier New', monospace; font-weight: bold; padding: 1.5rem 1rem; border: 3px solid var(--primary); border-radius: 16px; background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%); transition: all 0.3s ease;"
+                                    style="text-align: center; letter-spacing: 0.8rem; font-size: 2rem; font-family: 'Courier New', monospace; font-weight: bold; padding: 1.5rem 1rem; border: 3px solid var(--primary); border-radius: 16px; background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%); transition: all 0.3s ease; color: #000000 !important;"
                                 >
                             </div>
                             <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--text-light); line-height: 1.6;">
-                                <span style="display: inline-block; margin-right: 0.5rem;">⏱️</span>
+                                <span data-icon="time" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 0.5rem;"></span>
                                 Code expires in <strong>10 minutes</strong>
                             </p>
                             <div id="otpProgress" style="display: none; width: 100%; max-width: 400px; margin: 1rem auto 0; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden;">
@@ -656,7 +741,7 @@
 
                         <button type="button" class="btn-enhanced" id="verifyOtpBtn" style="margin-top: 2rem;">
                             <span class="btn-content">
-                                <span id="verifyBtnText">✓ Verify & Continue</span>
+                                <span id="verifyBtnText" style="display: flex; align-items: center; gap: 0.5rem;"><span data-icon="check" style="display: inline-block; width: 16px; height: 16px;"></span>Verify & Continue</span>
                                 <span id="verifyBtnLoading" class="spinner" style="display: none;"></span>
                             </span>
                         </button>
@@ -671,13 +756,10 @@
                             </button>
                         </div>
 
-                        <div id="devOtpDisplayContainer" style="margin-top: 2rem; display: none; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;">
-                            <!-- OTP will be displayed here in development mode -->
-                        </div>
 
                         <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border-left: 4px solid var(--primary);">
                             <p style="margin: 0; font-size: 0.875rem; color: var(--text); line-height: 1.6;">
-                                <strong>💡 Tip:</strong> Can't find the email? Check your spam/junk folder. The code is 6 digits and expires in 10 minutes.
+                                <strong style="display: inline-flex; align-items: center; gap: 0.5rem;"><span data-icon="tip" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>Tip:</strong> Can't find the email? Check your spam/junk folder. The code is 6 digits and expires in 10 minutes.
                             </p>
                         </div>
                     </div>
@@ -685,9 +767,9 @@
                     <div id="statusMessage" class="status-message"></div>
 
                     <div class="security-info" id="securityInfo">
-                        <span class="security-icon">🔐</span>
-                        <div class="security-text">
-                            <strong>Secure Login:</strong> We use one-time password (OTP) authentication for enhanced security. 
+                        <span class="security-icon" data-icon="lock" style="display: inline-block; width: 24px; height: 24px; vertical-align: middle;"></span>
+                        <div class="security-text" style="color: #000000 !important;">
+                            <strong style="color: #000000 !important;">Secure Login:</strong> We use one-time password (OTP) authentication for enhanced security. 
                             No passwords to remember. The code expires in 10 minutes for your protection.
                         </div>
                     </div>
@@ -701,7 +783,7 @@
         </div>
 
         <div class="login-footer">
-            <p>&copy; 2024 Sleuthservice. All rights reserved. | Confidentiality Guaranteed</p>
+            <p>&copy; <span data-current-year></span> <span data-company-name>Sleuthservice</span>. All rights reserved. | Confidentiality Guaranteed</p>
         </div>
     </div>
 
@@ -726,6 +808,7 @@
                 this.sentEmail = document.getElementById('sentEmail');
                 this.currentEmail = '';
                 this.resendTimer = null;
+                this.isRequestingOtp = false; // Prevent multiple simultaneous requests
                 
                 this.init();
             }
@@ -819,6 +902,12 @@
                 e.preventDefault();
                 e.stopPropagation();
                 
+                // Prevent multiple simultaneous requests
+                if (this.isRequestingOtp) {
+                    console.log('OTP request already in progress, ignoring duplicate request');
+                    return;
+                }
+                
                 const email = this.emailInput?.value.trim();
                 console.log('Email value:', email);
                 
@@ -840,18 +929,31 @@
                 }
 
                 console.log('Email validated, sending request...');
+                this.isRequestingOtp = true;
                 this.setLoading(true);
                 this.setStatus('sending', `Sending OTP code to ${email}...`);
 
+                // Detect backend URL dynamically
+                const getBackendUrl = () => {
+                    const hostname = window.location.hostname;
+                    const port = window.location.port || '3001';
+                    const protocol = window.location.protocol;
+                    
+                    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                        return `http://localhost:${port}`;
+                    }
+                    return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+                };
+                
                 try {
                     console.log('Making API request to /api/client/request-login');
-                    const response = await fetch('/api/client/request-login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email })
-                    });
+                    const response = await fetch(`${getBackendUrl()}/api/client/request-login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
                     
                     console.log('Response status:', response.status, response.statusText);
                     
@@ -865,46 +967,16 @@
                     }
                     
                     if (response.ok && data.success) {
-                        console.log('✅ OTP sent successfully');
-                        console.log('📦 Response data:', JSON.stringify(data, null, 2));
+                        console.log('OTP sent successfully');
+                        console.log('Response data:', JSON.stringify(data, null, 2));
                         
                         this.currentEmail = email;
                         
-                        // Show OTP step first
+                        // Show OTP step
                         this.showOtpStep();
                         
-                        // Show OTP in development mode (when returned in response)
-                        if (data.otp) {
-                            console.log('🔑 DEVELOPMENT MODE - OTP Code received:', data.otp);
-                            console.log('⏳ Waiting for OTP step to be visible...');
-                            
-                            // Multiple attempts to display OTP (ensure it shows)
-                            setTimeout(() => {
-                                console.log('🔄 Attempt 1: Displaying OTP...');
-                                this.displayOtpInDevMode(data.otp);
-                            }, 100);
-                            
-                            setTimeout(() => {
-                                console.log('🔄 Attempt 2: Displaying OTP...');
-                                this.displayOtpInDevMode(data.otp);
-                            }, 500);
-                            
-                            setTimeout(() => {
-                                console.log('🔄 Attempt 3: Displaying OTP...');
-                                this.displayOtpInDevMode(data.otp);
-                            }, 1000);
-                        } else {
-                            console.log('⚠️ OTP not in response');
-                            console.log('Response keys:', Object.keys(data || {}));
-                            console.log('Full response:', JSON.stringify(data, null, 2));
-                        }
-                        
-                        // Show status with OTP if available
-                        let statusMsg = `✅ OTP code sent! Check your email inbox (and spam folder) for the 6-digit code.`;
-                        if (data.otp) {
-                            statusMsg += `\n\n🔑 DEVELOPMENT MODE - Your OTP: ${data.otp}`;
-                        }
-                        this.setStatus('success', statusMsg);
+                        // Show success message
+                        this.setStatus('success', 'OTP code sent! Please check your email inbox (and spam folder) for the 6-digit code.');
                         
                         // Start resend timer (60 seconds)
                         this.startResendTimer();
@@ -927,9 +999,10 @@
                         errorMessage += error.message || 'Please try again or contact support if the problem persists.';
                     }
                     
-                    this.setStatus('error', `❌ ${errorMessage}`);
+                    this.setStatus('error', errorMessage);
                 } finally {
                     this.setLoading(false);
+                    this.isRequestingOtp = false; // Reset flag after request completes
                 }
             }
 
@@ -940,7 +1013,7 @@
                 // Remove any non-numeric characters
                 otp = otp.replace(/[^0-9]/g, '');
                 
-                console.log('🔐 Verifying OTP:', {
+                console.log('Verifying OTP:', {
                     rawValue: this.otpInput.value,
                     cleanedOtp: otp,
                     length: otp.length,
@@ -957,7 +1030,19 @@
                 this.clearStatus();
 
                 try {
-                    const response = await fetch('/api/client/verify-otp', {
+                    // Detect backend URL dynamically
+                    const getBackendUrl = () => {
+                        const hostname = window.location.hostname;
+                        const port = window.location.port || '3001';
+                        const protocol = window.location.protocol;
+                        
+                        if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                            return `http://localhost:${port}`;
+                        }
+                        return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+                    };
+                    
+                    const response = await fetch(`${getBackendUrl()}/api/client/verify-otp`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -973,12 +1058,12 @@
                     const data = await response.json();
                     
                     if (data.success && data.token) {
-                        this.setStatus('success', '✅ Login successful! Redirecting to dashboard...');
+                        this.setStatus('success', 'Login successful! Redirecting to dashboard...');
                         
                         // Store token and redirect
                         localStorage.setItem('clientToken', data.token);
-                        console.log('✅ Token stored:', data.token.substring(0, 20) + '...');
-                        console.log('🔄 Redirecting to dashboard...');
+                        console.log('Token stored:', data.token.substring(0, 20) + '...');
+                        console.log('Redirecting to dashboard...');
                         
                         // Small delay to show success message
                         setTimeout(() => {
@@ -1000,7 +1085,7 @@
                         errorMessage += error.message || 'Please try again.';
                     }
                     
-                    this.setStatus('error', `❌ ${errorMessage}`);
+                    this.setStatus('error', errorMessage);
                     this.otpInput.select();
                 } finally {
                     this.setVerifyLoading(false);
@@ -1012,12 +1097,29 @@
                     return; // Still in cooldown
                 }
 
+                // Clear OTP input before resending
+                if (this.otpInput) {
+                    this.otpInput.value = '';
+                    this.otpInput.removeAttribute('data-auto-filled');
+                }
+                
                 this.setLoading(true);
-                this.otpInput.value = '';
                 this.clearStatus();
 
                 try {
-                    const response = await fetch('/api/client/request-login', {
+                    // Detect backend URL dynamically
+                    const getBackendUrl = () => {
+                        const hostname = window.location.hostname;
+                        const port = window.location.port || '3001';
+                        const protocol = window.location.protocol;
+                        
+                        if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                            return `http://localhost:${port}`;
+                        }
+                        return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+                    };
+                    
+                    const response = await fetch(`${getBackendUrl()}/api/client/request-login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -1028,14 +1130,14 @@
                     const data = await response.json();
                     
                     if (data.success) {
-                        this.setStatus('success', '✅ New OTP code sent! Check your email.');
+                        this.setStatus('success', 'New OTP code sent! Check your email.');
                         this.startResendTimer();
                     } else {
                         throw new Error(data.error || 'Failed to resend OTP');
                     }
                     
                 } catch (error) {
-                    this.setStatus('error', `❌ ${error.message || 'Failed to resend code. Please try again.'}`);
+                    this.setStatus('error', `<span data-icon="close" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 0.5rem;"></span> ${error.message || 'Failed to resend code. Please try again.'}`);
                 } finally {
                     this.setLoading(false);
                 }
@@ -1043,18 +1145,30 @@
 
             showOtpStep() {
                 console.log('showOtpStep called');
+                
+                // Clear OTP input to ensure it's empty (no auto-fill)
+                if (this.otpInput) {
+                    this.otpInput.value = '';
+                    this.otpInput.removeAttribute('data-auto-filled');
+                }
+                
                 this.emailStep.style.display = 'none';
                 this.otpStep.style.display = 'block';
-                this.sentEmail.textContent = this.currentEmail;
+                
+                if (this.sentEmail) {
+                    this.sentEmail.textContent = this.currentEmail;
+                }
+                
                 document.getElementById('loginTitle').textContent = 'Check Your Email';
                 document.getElementById('loginSubtitle').textContent = 'Enter the 6-digit verification code we sent to your email address.';
                 
-                // Verify OTP step is visible
+                // Verify OTP step is visible and clear again after DOM update
                 setTimeout(() => {
-                    const otpStep = document.getElementById('otpStep');
-                    const container = document.getElementById('devOtpDisplayContainer');
-                    console.log('OTP step display:', window.getComputedStyle(otpStep).display);
-                    console.log('OTP container exists:', !!container);
+                    // Clear again after DOM update (in case browser autofill happened)
+                    if (this.otpInput) {
+                        this.otpInput.value = '';
+                        this.otpInput.removeAttribute('data-auto-filled');
+                    }
                     
                     this.otpInput.focus();
                 }, 300);
@@ -1114,13 +1228,6 @@
                 this.clearResendTimer();
                 this.clearOtpCountdown();
                 
-                // Hide OTP display container
-                const otpContainer = document.getElementById('devOtpDisplayContainer');
-                if (otpContainer) {
-                    otpContainer.style.display = 'none';
-                    otpContainer.innerHTML = '';
-                }
-                
                 document.getElementById('loginTitle').textContent = 'Welcome Back';
                 document.getElementById('loginSubtitle').textContent = 'Enter your email address to receive a secure one-time password (OTP) to access your client portal.';
                 setTimeout(() => {
@@ -1161,118 +1268,6 @@
                 document.getElementById('resendBtnText').textContent = 'Resend Code';
             }
 
-            displayOtpInDevMode(otp) {
-                console.log('═══════════════════════════════════');
-                console.log('displayOtpInDevMode called with OTP:', otp);
-                console.log('═══════════════════════════════════');
-                
-                // Validate OTP
-                if (!otp || typeof otp !== 'string') {
-                    console.error('❌ Invalid OTP provided:', otp);
-                    return;
-                }
-
-                console.log('Creating OTP display on OTP page for:', otp);
-                
-                // Get the container in the OTP step
-                const container = document.getElementById('devOtpDisplayContainer');
-                console.log('Container element:', container);
-                
-                if (!container) {
-                    console.error('❌ OTP container not found! Trying to find it...');
-                    // Try to find it again after a delay
-                    setTimeout(() => {
-                        const retryContainer = document.getElementById('devOtpDisplayContainer');
-                        if (retryContainer) {
-                            console.log('✅ Container found on retry!');
-                            this.displayOtpInDevMode(otp);
-                        } else {
-                            console.error('❌ Container still not found. OTP step may not be visible yet.');
-                        }
-                    }, 500);
-                    return;
-                }
-                
-                console.log('✅ Container found, creating OTP display...');
-                console.log('Container parent display:', window.getComputedStyle(container.parentElement).display);
-                
-                // Ensure container and parent are visible
-                const otpStep = document.getElementById('otpStep');
-                if (otpStep) {
-                    otpStep.style.display = 'block';
-                    console.log('✅ OTP step forced to display: block');
-                }
-
-                // Create development OTP display box - make it very visible
-                container.innerHTML = `
-                    <div id="devOtpBox" style="padding: 2rem; background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 3px solid #1e40af; border-radius: 20px; box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3); animation: pulse 2s ease-in-out infinite;">
-                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
-                            <div style="font-size: 2rem;">🔑</div>
-                            <div>
-                                <div style="font-weight: 800; font-size: 1.2rem; color: #1e40af;">Development Mode</div>
-                                <div style="font-size: 0.9rem; color: var(--text-light);">OTP Code (for testing)</div>
-                            </div>
-                        </div>
-                        <div style="background: white; padding: 2rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center; border: 3px dashed #1e40af; box-shadow: inset 0 2px 8px rgba(30, 64, 175, 0.1);">
-                            <div style="font-size: 1rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1rem;">Your OTP Code:</div>
-                            <div style="font-size: 4rem; font-weight: 900; font-family: 'Courier New', monospace; letter-spacing: 1rem; color: #1e40af; text-shadow: 0 4px 8px rgba(30, 64, 175, 0.2); line-height: 1.2;">
-                                ${otp}
-                            </div>
-                        </div>
-                        <button id="copyOtpBtn" onclick="navigator.clipboard.writeText('${otp}'); const btn = document.getElementById('copyOtpBtn'); const original = btn.innerHTML; btn.innerHTML='✓ Copied to Clipboard!'; btn.style.background='#10b981'; setTimeout(() => { btn.innerHTML = original; btn.style.background=''; }, 2000);" 
-                                style="width: 100%; padding: 1.125rem; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border: none; border-radius: 12px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 16px rgba(30, 64, 175, 0.4);">
-                            📋 Copy OTP Code
-                        </button>
-                        <div style="margin-top: 1rem; font-size: 0.8rem; color: #dc2626; text-align: center; font-weight: 600; padding: 0.5rem; background: rgba(220, 38, 38, 0.1); border-radius: 8px;">
-                            ⚠️ This will not appear in production
-                        </div>
-                    </div>
-                `;
-                
-                // Show the container with aggressive styling
-                container.style.display = 'block';
-                container.style.visibility = 'visible';
-                container.style.opacity = '1';
-                
-                console.log('✅ OTP displayed on OTP page');
-                console.log('Container display style:', window.getComputedStyle(container).display);
-                console.log('Container visibility:', window.getComputedStyle(container).visibility);
-                
-                // Verify it's actually visible
-                setTimeout(() => {
-                    const rect = container.getBoundingClientRect();
-                    console.log('Container dimensions:', {
-                        width: rect.width,
-                        height: rect.height,
-                        top: rect.top,
-                        left: rect.left,
-                        visible: rect.width > 0 && rect.height > 0
-                    });
-                    
-                    if (rect.width === 0 || rect.height === 0) {
-                        console.error('⚠️ Container has zero dimensions! It might be hidden.');
-                        // Force it visible
-                        container.style.cssText += '; display: block !important; visibility: visible !important; opacity: 1 !important;';
-                    }
-                }, 100);
-                
-                // Also auto-fill the OTP input field (for convenience, but don't auto-verify)
-                setTimeout(() => {
-                    const otpInput = document.getElementById('otp');
-                    if (otpInput && !otpInput.value) {
-                        // Ensure OTP is exactly 6 digits as string
-                        const cleanOtp = String(otp).trim().replace(/[^0-9]/g, '').substring(0, 6);
-                        if (cleanOtp.length === 6) {
-                            otpInput.value = cleanOtp;
-                            // Mark as auto-filled so it doesn't auto-verify
-                            otpInput.setAttribute('data-auto-filled', 'true');
-                            console.log('✅ OTP auto-filled in input field:', cleanOtp, '(manual verification required)');
-                        } else {
-                            console.error('⚠️ Invalid OTP length for auto-fill:', cleanOtp);
-                        }
-                    }
-                }, 500);
-            }
 
             setLoading(loading) {
                 if (loading) {
@@ -1321,6 +1316,12 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM Content Loaded - Initializing ClientLogin');
+            
+            // Initialize icons
+            if (window.initAllIcons) {
+                setTimeout(() => window.initAllIcons(), 100);
+            }
+            
             const clientLogin = new ClientLogin();
             
             // Make it globally accessible for debugging
@@ -1332,8 +1333,7 @@
                 clientLogin.displayOtpInDevMode(otp || '123456');
             };
             
-            console.log('✅ Client login page initialized');
-            console.log('💡 Tip: Use testOtpBanner("123456") in console to test the banner');
+            console.log('Client login page initialized');
             
             // Double-check form submission
             const form = document.getElementById('loginForm');

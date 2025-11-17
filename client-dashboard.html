@@ -6,20 +6,33 @@
     <title>Client Dashboard - Sleuthservice</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <script src="icons.js" defer></script>
     <script src="terms-acceptance.js" defer></script>
+    <script src="siteConfig.js" defer></script>
     <style>
         /* Utility Classes */
         .hidden {
             display: none !important;
         }
         
+        html, body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
         .client-container {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            height: auto;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 60%, #1e293b 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             position: relative;
-            background-attachment: fixed;
+            overflow-y: visible !important;
+            overflow-x: hidden;
         }
         
         .client-container::before {
@@ -40,31 +53,16 @@
         }
         
         .client-header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            color: white;
-            padding: 1.5rem 2rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             border-bottom: 3px solid #06b6d4;
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
             z-index: 10;
-        }
-        
-        .client-header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #06b6d4);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
         }
         
         .client-header::before {
@@ -92,14 +90,10 @@
             margin: 0;
             font-size: 1.75rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.5px;
             position: relative;
             z-index: 1;
-            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .client-content {
@@ -117,7 +111,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -185,17 +179,17 @@
 
         .message-modal-panel {
             background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: white;
+            backdrop-filter: blur(20px);
             border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(6, 182, 212, 0.3);
             width: 100%;
             max-width: 600px;
             max-height: 85vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             animation: slideUp 0.3s ease;
             transform: scale(1);
         }
@@ -258,13 +252,12 @@
 
         .message-modal-header {
             padding: 1.5rem;
-            border-bottom: 2px solid rgba(6, 182, 212, 0.3);
+            border-bottom: 2px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
-            border-top: 3px solid #06b6d4;
         }
 
         .message-modal-header h3 {
@@ -309,8 +302,7 @@
         .message-modal-footer {
             padding: 1.5rem;
             border-top: 2px solid var(--border);
-            background: rgba(15, 23, 42, 0.6);
-            color: #e2e8f0;
+            background: #f8fafc;
         }
         
         .welcome-section {
@@ -344,17 +336,18 @@
         }
         
         .case-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-            backdrop-filter: blur(20px);
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
             padding: 2rem;
             border-radius: 1.25rem;
-            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeInUp 0.6s ease-out backwards;
+            color: var(--text);
         }
         
         .case-card::before {
@@ -364,12 +357,17 @@
             left: 0;
             width: 5px;
             height: 100%;
-            background: linear-gradient(180deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            background: linear-gradient(180deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
             transition: width 0.3s ease;
         }
         
         .case-card:hover::before {
             width: 6px;
+        }
+        
+        .case-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         
         .case-card:nth-child(1) { animation-delay: 0.1s; }
@@ -476,7 +474,8 @@
         
         .case-info-item strong {
             font-size: 0.7rem;
-            color: #64748b;
+            color: var(--text);
+            opacity: 0.85;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
@@ -485,7 +484,7 @@
         
         .case-info-item span {
             font-size: 1.1rem;
-            color: #1e293b;
+            color: var(--text);
             font-weight: 600;
         }
         
@@ -595,7 +594,8 @@
         
         .update-meta {
             font-size: 0.75rem;
-            color: var(--text-light);
+            color: var(--text);
+            opacity: 0.9;
             display: flex;
             gap: 1rem;
         }
@@ -604,9 +604,9 @@
             text-align: center;
             padding: 3rem;
             background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(6, 182, 212, 0.2);
-            color: white;
+            color: var(--text);
             border-radius: 1rem;
             box-shadow: var(--shadow);
         }
@@ -671,7 +671,7 @@
         <div class="client-content">
             <div id="errorContainer" class="error-container hidden">
                 <h2>Authentication Error</h2>
-                <p id="errorMessage"></p>
+                <p id="errorMessage" role="alert" aria-live="polite" aria-atomic="true"></p>
                 <a href="client-login.html" class="btn btn-primary" style="margin-top: 1rem;">Return to Login</a>
             </div>
             
@@ -679,18 +679,18 @@
             <div class="welcome-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
                     <div>
-                        <h2 style="margin: 0 0 0.75rem 0; font-size: 2rem; color: #1e293b; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2;">
-                            Welcome, <span id="clientName" style="background: linear-gradient(135deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Client</span> 👋
+                        <h2 style="margin: 0 0 0.75rem 0; font-size: 2rem; color: var(--text); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2;">
+                            Welcome, <span id="clientName" style="background: linear-gradient(135deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Client</span> <span data-icon="welcome" style="display: inline-block; vertical-align: middle; margin-left: 0.5rem;"></span>
                         </h2>
-                        <p style="margin: 0; color: #64748b; font-size: 1.05rem; font-weight: 500; line-height: 1.6;">View and manage all your cases in one place. Track progress and stay updated with real-time notifications.</p>
+                        <p style="margin: 0; color: var(--text); opacity: 0.9; font-size: 1.05rem; font-weight: 500; line-height: 1.6;">View and manage all your cases in one place. Track progress and stay updated with real-time notifications.</p>
                     </div>
                     <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
                         <button id="searchCasesBtn" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.625rem; padding: 0.875rem 1.5rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.95rem;" type="button">
-                            <span style="font-size: 1.1rem;">🔍</span>
+                            <span data-icon="search" style="display: inline-block; width: 18px; height: 18px;"></span>
                             <span>Search Cases</span>
                         </button>
                         <button id="openInquiryFormBtn" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.625rem; padding: 0.875rem 1.75rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);">
-                            <span style="font-size: 1.1rem;">➕</span>
+                            <span data-icon="add" style="display: inline-block; width: 18px; height: 18px;"></span>
                             <span>Submit New Inquiry</span>
                         </button>
                     </div>
@@ -698,15 +698,15 @@
             </div>
             
             <!-- Search Bar (Initially Hidden) -->
-            <div id="searchSection" class="hidden" style="background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(20px); padding: 2rem; border-radius: 1.25rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); margin-bottom: 1.5rem; border: 1px solid rgba(6, 182, 212, 0.3); animation: fadeInUp 0.4s ease-out;">
+            <div id="searchSection" class="hidden" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%); backdrop-filter: blur(20px); padding: 2rem; border-radius: 1.25rem; box-shadow: 0 8px 32px rgba(30, 64, 175, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08); margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.8); animation: fadeInUp 0.4s ease-out;">
                 <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                    <input type="text" id="caseSearchInput" placeholder="🔍 Search by Case ID, service type, or status..." 
-                           style="flex: 1; min-width: 250px; padding: 1rem; border: 2px solid rgba(6, 182, 212, 0.3); border-radius: 0.75rem; font-size: 0.95rem; background: rgba(15, 23, 42, 0.8); color: #e2e8f0; transition: all 0.3s ease;"
-                           onfocus="this.style.borderColor='#06b6d4'; this.style.boxShadow='0 0 0 3px rgba(6, 182, 212, 0.2)'"
-                           onblur="this.style.borderColor='rgba(6, 182, 212, 0.3)'; this.style.boxShadow='none'">
-                    <select id="statusFilterSelect" style="padding: 1rem; border: 2px solid rgba(6, 182, 212, 0.3); border-radius: 0.75rem; font-size: 0.95rem; background: rgba(15, 23, 42, 0.8); color: #e2e8f0; cursor: pointer; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='#06b6d4'; this.style.boxShadow='0 0 0 3px rgba(6, 182, 212, 0.2)'"
-                            onblur="this.style.borderColor='rgba(6, 182, 212, 0.3)'; this.style.boxShadow='none'">
+                    <input type="text" id="caseSearchInput" placeholder="Search by Case ID, service type, or status..." 
+                           style="flex: 1; min-width: 250px; padding: 1rem; border: 2px solid rgba(226, 232, 240, 0.8); border-radius: 0.75rem; font-size: 0.95rem; background: rgba(255, 255, 255, 0.9); transition: all 0.3s ease;"
+                           onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
+                           onblur="this.style.borderColor='rgba(226, 232, 240, 0.8)'; this.style.boxShadow='none'">
+                    <select id="statusFilterSelect" style="padding: 1rem; border: 2px solid rgba(226, 232, 240, 0.8); border-radius: 0.75rem; font-size: 0.95rem; background: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.3s ease;"
+                            onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
+                            onblur="this.style.borderColor='rgba(226, 232, 240, 0.8)'; this.style.boxShadow='none'">
                         <option value="">All Status</option>
                         <option value="new">New</option>
                         <option value="in-progress">In Progress</option>
@@ -746,7 +746,7 @@
         <div class="message-modal-panel" style="max-width: 700px; max-height: 90vh;">
             <div class="message-modal-header">
                 <h3>
-                    <span>➕</span>
+                    <span data-icon="add" style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; margin-right: 0.5rem;"></span>
                     <span>Submit New Inquiry</span>
                 </h3>
                 <button class="close-message-modal" id="closeInquiryBtn">✕</button>
@@ -761,8 +761,8 @@
                     
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <label style="font-weight: 600; color: var(--text); font-size: 0.9rem;">Email Address *</label>
-                        <input type="email" name="email" id="inquiryEmail" placeholder="your.email@example.com" required 
-                               style="padding: 0.75rem; border: 2px solid var(--border); border-radius: 0.5rem; font-size: 0.95rem;">
+                        <input type="email" name="email" id="inquiryEmail" placeholder="your.email@example.com" required
+                               style="padding: 0.75rem; border: 2px solid var(--border); border-radius: 0.5rem; font-size: 0.95rem; color: #000000 !important;">
                     </div>
                     
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
@@ -774,7 +774,7 @@
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <label style="font-weight: 600; color: var(--text); font-size: 0.9rem;">Service Type *</label>
                         <select name="service" id="inquiryService" required 
-                                style="padding: 0.75rem; border: 2px solid var(--border); border-radius: 0.5rem; font-size: 0.95rem; background: white;">
+                                style="padding: 0.75rem; border: 2px solid var(--border); border-radius: 0.5rem; font-size: 0.95rem; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); color: #000000;">
                             <option value="">Select Service</option>
                             <option value="Digital Forensics">Digital Forensics</option>
                             <option value="Due Diligence">Due Diligence</option>
@@ -834,10 +834,10 @@
         
         function getStatusSteps(status) {
             const steps = [
-                { id: 'submitted', label: 'Submitted', icon: '📋', completed: true },
-                { id: 'review', label: 'Under Review', icon: '👁️', completed: status !== 'new' },
-                { id: 'investigation', label: 'Investigation', icon: '🔍', completed: status === 'in-progress' || status === 'completed' },
-                { id: 'report', label: 'Report Ready', icon: '📄', completed: status === 'completed' }
+                { id: 'submitted', label: 'Submitted', icon: 'document', completed: true },
+                { id: 'review', label: 'Under Review', icon: 'document', completed: status !== 'new' },
+                { id: 'investigation', label: 'Investigation', icon: 'search', completed: status === 'in-progress' || status === 'completed' },
+                { id: 'report', label: 'Report Ready', icon: 'document', completed: status === 'completed' }
             ];
             
             let activeStepIndex = 0;
@@ -850,11 +850,11 @@
         }
         
         function getFileIcon(filename) {
-            if (filename.match(/\.(pdf)$/i)) return '📄';
-            if (filename.match(/\.(jpg|jpeg|png|gif)$/i)) return '🖼️';
-            if (filename.match(/\.(xlsx|xls|csv)$/i)) return '📊';
-            if (filename.match(/\.(doc|docx)$/i)) return '📝';
-            return '📎';
+            if (filename.match(/\.(pdf)$/i)) return 'document';
+            if (filename.match(/\.(jpg|jpeg|png|gif)$/i)) return 'document';
+            if (filename.match(/\.(xlsx|xls|csv)$/i)) return 'document';
+            if (filename.match(/\.(doc|docx)$/i)) return 'document';
+            return 'document';
         }
         
         function formatFileSize(bytes) {
@@ -864,11 +864,11 @@
         
         function getUpdateIcon(status) {
             const iconMap = {
-                'new': '📋',
-                'in-progress': '🔄',
-                'completed': '✅',
-                'on-hold': '⏸️',
-                'default': '📝'
+                'new': 'document',
+                'in-progress': 'refresh',
+                'completed': 'success',
+                'on-hold': 'warning',
+                'default': 'document'
             };
             return iconMap[status] || iconMap['default'];
         }
@@ -914,12 +914,16 @@
             if (visibleCount === 0 && caseCards.length > 0) {
                 if (!noResultsMsg && container) {
                     container.insertAdjacentHTML('afterbegin', `
-                        <div class="no-results-message" style="text-align: center; padding: 3rem; background: white; border-radius: 0.75rem; box-shadow: var(--shadow); margin-bottom: 1.5rem;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <div class="no-results-message" style="text-align: center; padding: 3rem; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 0.75rem; box-shadow: var(--shadow); margin-bottom: 1.5rem; color: var(--text);">
+                            <div data-icon="search" style="display: inline-block; width: 48px; height: 48px; margin-bottom: 1rem;"></div>
                             <h3 style="margin: 0 0 0.5rem 0; color: var(--text);">No cases found</h3>
                             <p style="margin: 0; color: var(--text-light);">Try adjusting your search or filter criteria.</p>
                         </div>
                     `);
+                    // Initialize icons after inserting HTML
+                    if (window.initAllIcons) {
+                        setTimeout(() => window.initAllIcons(), 50);
+                    }
                 }
             } else if (noResultsMsg) {
                 noResultsMsg.remove();
@@ -957,6 +961,18 @@
             });
         }
         
+        // Detect backend URL dynamically
+        const getBackendUrl = () => {
+            const hostname = window.location.hostname;
+            const port = window.location.port || '3001';
+            const protocol = window.location.protocol;
+            
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+                return `http://localhost:${port}`;
+            }
+            return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+        };
+        
         // Main Dashboard Functions
         async function loadDashboard() {
             try {
@@ -989,7 +1005,7 @@
                 }
                 
                 // Fetch cases
-                const response = await fetch(`/api/client/cases?token=${token}`);
+                const response = await fetch(`${getBackendUrl()}/api/client/cases?token=${token}`);
                 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
@@ -999,10 +1015,10 @@
                 
                 const data = await response.json();
                 
-                console.log('API Response:', data); // Debug log
+                // API response received
                 
                 if (!data || !data.success) {
-                    console.error('API returned error:', data);
+                    // API returned error (logged but not exposed to user)
                     showError(data?.error || 'Failed to load cases');
                     return;
                 }
@@ -1014,7 +1030,7 @@
                 const errorContainer = document.getElementById('errorContainer');
                 
                 if (!dashboardContainer) {
-                    console.error('Dashboard container not found!');
+                    // Dashboard container not found
                     showError('Dashboard container not found');
                     return;
                 }
@@ -1051,6 +1067,13 @@
                 // Render cases
                 document.getElementById('casesContainer').innerHTML = data.cases.map(renderCase).join('');
                 
+                // Initialize icons for rendered cases
+                setTimeout(() => {
+                    if (window.initAllIcons) {
+                        window.initAllIcons();
+                    }
+                }, 100);
+                
                 // Attach event listeners to download buttons
                 document.querySelectorAll('.download-all-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -1074,7 +1097,7 @@
                 }, 300);
                 
             } catch (error) {
-                console.error('Load dashboard error:', error);
+                // Error loading dashboard (details not exposed)
                 showError('Failed to load dashboard: ' + error.message);
             }
         }
@@ -1106,19 +1129,24 @@
                 clientNameEl.textContent = caseItem.name.split(' ')[0] || 'Client';
             }
             
+            // Escape all user data to prevent XSS
+            const safeId = escapeHtml(caseItem.id);
+            const safeService = escapeHtml(caseItem.service || 'General Inquiry');
+            const safeStatus = escapeHtml(caseItem.status);
+            
             return `
-                <div class="case-card" data-case-id="${caseItem.id}" data-case-status="${caseItem.status}" data-case-service="${(caseItem.service || '').toLowerCase()}">
+                <div class="case-card" data-case-id="${safeId}" data-case-status="${safeStatus}" data-case-service="${escapeHtml((caseItem.service || '').toLowerCase())}">
                     <div class="case-header">
                         <div>
-                            <div class="case-title">${caseItem.id}</div>
+                            <div class="case-title">${safeId}</div>
                             <div style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.25rem;">
-                                Service: ${caseItem.service || 'General Inquiry'}
+                                Service: ${safeService}
                             </div>
                             <div style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">
                                 Created: ${new Date(caseItem.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                             </div>
                         </div>
-                        <span class="status-badge status-${caseItem.status}">${caseItem.status}</span>
+                        <span class="status-badge status-${safeStatus}">${safeStatus}</span>
                     </div>
                     
                     <!-- Visual Status Tracker -->
@@ -1127,7 +1155,7 @@
                         <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%); background-size: 200% 100%; animation: shimmer 3s ease-in-out infinite;"></div>
                         
                         <h4 style="margin: 0 0 2rem 0; font-size: 0.9rem; color: #475569; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 800; display: flex; align-items: center; gap: 0.75rem; position: relative; z-index: 1;">
-                            <span style="font-size: 1.25rem; filter: drop-shadow(0 2px 4px rgba(30, 64, 175, 0.2));">📊</span>
+                            <span data-icon="document" style="display: inline-block; width: 20px; height: 20px; filter: drop-shadow(0 2px 4px rgba(30, 64, 175, 0.2));"></span>
                             <span>Status Tracker</span>
                         </h4>
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; padding: 1rem 0;">
@@ -1154,7 +1182,7 @@
                                         <div style="width: 4rem; height: 4rem; border-radius: 50%; 
                                                     background: ${isCompleted || isActive ? bgGradient : '#e2e8f0'}; 
                                                     display: flex; align-items: center; justify-content: center; 
-                                                    color: ${isCompleted || isActive ? 'white' : '#94a3b8'}; 
+                                                    color: ${isCompleted || isActive ? 'white' : 'var(--text)'}; 
                                                     font-size: 1.5rem; 
                                                     margin-bottom: 1rem;
                                                     box-shadow: ${isCompleted ? '0 8px 16px rgba(16, 185, 129, 0.3), 0 0 0 4px rgba(16, 185, 129, 0.1)' : isActive ? '0 8px 16px rgba(59, 130, 246, 0.4), 0 0 0 4px rgba(59, 130, 246, 0.15)' : '0 2px 8px rgba(0, 0, 0, 0.08)'}; 
@@ -1163,11 +1191,11 @@
                                                     transform: ${isActive ? 'scale(1.1)' : 'scale(1)'};
                                                     position: relative;
                                                     ${pulseStyle}">
-                                            ${isCompleted ? '<span style="font-size: 1.75rem;">✅</span>' : `<span style="font-size: 1.75rem; filter: ${isActive ? 'drop-shadow(0 2px 8px rgba(255,255,255,0.5))' : 'none'};">${step.icon}</span>`}
+                                            ${isCompleted ? '<span data-icon="success" style="display: inline-block; width: 28px; height: 28px; vertical-align: middle;"></span>' : `<span data-icon="${step.icon}" style="display: inline-block; width: 28px; height: 28px; vertical-align: middle; filter: ${isActive ? 'drop-shadow(0 2px 8px rgba(255,255,255,0.5))' : 'none'};"></span>`}
                                             ${isActive ? '<div style="position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(59, 130, 246, 0.3); animation: statusPulseRing 2s ease-in-out infinite;"></div>' : ''}
                                         </div>
                                         <!-- Step Label -->
-                                        <div style="text-align: center; font-size: 0.8rem; color: ${isCompleted ? '#065f46' : isActive ? '#1e40af' : '#64748b'}; font-weight: ${isCompleted || isActive ? '700' : '500'}; max-width: 90px; line-height: 1.3;">
+                                        <div style="text-align: center; font-size: 0.8rem; color: ${isCompleted ? '#10b981' : isActive ? '#3b82f6' : 'var(--text)'}; opacity: ${isCompleted || isActive ? '1' : '0.9'}; font-weight: ${isCompleted || isActive ? '700' : '500'}; max-width: 90px; line-height: 1.3;">
                                             ${step.label}
                                         </div>
                                         ${isCompleted ? '<div style="position: absolute; top: 2.25rem; width: 12px; height: 12px; background: white; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>' : ''}
@@ -1249,18 +1277,18 @@
                         </div>
                         <div class="case-info-item">
                             <strong>Contact</strong>
-                            <span>${caseItem.name || 'N/A'}</span>
+                            <span>${escapeHtml(caseItem.name || 'N/A')}</span>
                         </div>
                         <div class="case-info-item">
                             <strong>Email</strong>
-                            <span>${caseItem.email || 'N/A'}</span>
+                            <span>${escapeHtml(caseItem.email || 'N/A')}</span>
                         </div>
                     </div>
                     
                     ${caseItem.message ? `
                         <div style="padding: 1rem; background: var(--background); border-radius: 0.5rem; margin-bottom: 1rem;">
                             <strong style="display: block; margin-bottom: 0.5rem;">Case Details:</strong>
-                            <p style="margin: 0; color: var(--text); white-space: pre-wrap;">${caseItem.message}</p>
+                            <p style="margin: 0; color: var(--text); white-space: pre-wrap;">${escapeHtml(caseItem.message)}</p>
                         </div>
                     ` : ''}
                     
@@ -1269,13 +1297,14 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                         <div>
                                     <h4 style="margin: 0 0 0.25rem 0; font-size: 1rem; color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
-                                        <span>🔒</span>
+                                        <span data-icon="lock" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                                         <span>Secure Files</span>
                                     </h4>
                                     <p style="margin: 0; font-size: 0.75rem; color: var(--text-light);">${files.length} file${files.length !== 1 ? 's' : ''} available for download</p>
                                             </div>
-                                <button class="btn btn-primary btn-sm download-all-btn" data-case-id="${caseItem.id}" data-token="${token}" style="font-size: 0.875rem; padding: 0.5rem 1rem;">
-                                    📥 Download All as ZIP
+                                <button class="btn btn-primary btn-sm download-all-btn" data-case-id="${caseItem.id}" data-token="${token}" style="font-size: 0.875rem; padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span data-icon="document" style="display: inline-block; width: 16px; height: 16px;"></span>
+                                    <span>Download All as ZIP</span>
                                 </button>
                                         </div>
                             <div class="file-list" style="display: grid; gap: 0.75rem;">
@@ -1283,16 +1312,16 @@
                                     const fileIcon = getFileIcon(file.filename);
                                     const fileSize = formatFileSize(file.size);
                                     return `
-                                        <div class="file-item" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: white; border: 1px solid var(--border); border-radius: 0.5rem; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.boxShadow='none'; this.style.borderColor='var(--border)'">
+                                        <div class="file-item" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 0.5rem; transition: all 0.2s; color: var(--text);" onmouseover="this.style.boxShadow='0 2px 4px rgba(6,182,212,0.2)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.boxShadow='none'; this.style.borderColor='var(--border)'">
                                             <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
-                                                <div style="font-size: 2rem;">${fileIcon}</div>
+                                                <div data-icon="${fileIcon}" style="display: inline-block; width: 32px; height: 32px; vertical-align: middle;"></div>
                                                 <div style="flex: 1;">
                                                     <div style="font-weight: 600; color: var(--text); margin-bottom: 0.25rem;">${escapeHtml(file.originalName)}</div>
                                                     <div style="font-size: 0.75rem; color: var(--text-light);">${fileSize}</div>
                                     </div>
                                             </div>
-                                            <a href="${file.url}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                                                <span>⬇️</span>
+                                            <a href="${escapeHtml(file.url)}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                                                <span data-icon="document" style="display: inline-block; width: 16px; height: 16px;"></span>
                                                 <span>Download</span>
                                             </a>
                                         </div>
@@ -1305,7 +1334,7 @@
                     ${updates.length > 0 ? `
                         <div class="case-updates" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
                             <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
-                                <span>📋</span>
+                                <span data-icon="document" style="display: inline-block; width: 18px; height: 18px; vertical-align: middle;"></span>
                                 <span>Activity Feed</span>
                             </h4>
                             <div style="position: relative; padding-left: 2rem;">
@@ -1324,13 +1353,13 @@
                                             <div style="position: absolute; left: -1.875rem; top: 0.5rem; width: 1.25rem; height: 1.25rem; border-radius: 50%; background: ${statusColor}; border: 3px solid white; box-shadow: 0 0 0 2px ${statusColor}; z-index: 1;"></div>
                                             
                                             <!-- Update Card -->
-                                            <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                            <div style="background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.2); color: var(--text);">
                                                 <div style="display: flex; align-items: start; gap: 0.75rem;">
-                                                    <span style="font-size: 1.25rem; flex-shrink: 0;">${icon}</span>
+                                                    <span data-icon="${icon}" style="display: inline-block; width: 20px; height: 20px; flex-shrink: 0;"></span>
                                                     <div style="flex: 1;">
                                                         <div style="font-weight: 600; color: var(--text); margin-bottom: 0.5rem; line-height: 1.5;">${escapeHtml(update.message || update)}</div>
-                                                        <div style="font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-                                                            <span>📅 ${updateDate.toLocaleString('en-US', {
+                                                        <div style="font-size: 0.75rem; color: var(--text); opacity: 0.85; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                                                            <span style="display: inline-flex; align-items: center; gap: 0.5rem;"><span data-icon="calendar" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span>${updateDate.toLocaleString('en-US', {
                                                                 month: 'short',
                                                                 day: 'numeric',
                                                                 year: 'numeric',
@@ -1347,16 +1376,16 @@
                                 }).join('')}
                             </div>
                         </div>
-                    ` : '<div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; padding: 1.5rem; background: #f8fafc; border-radius: 0.5rem;"><p style="margin: 0; color: #94a3b8;">No updates yet. Check back soon!</p></div>'}
+                    ` : '<div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; padding: 1.5rem; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border-radius: 0.5rem;"><p style="margin: 0; color: var(--text); opacity: 0.9;">No updates yet. Check back soon!</p></div>'}
                     
                     <!-- Message Button -->
                     <div style="margin-top: 2rem; display: flex; justify-content: center;">
                         <button class="open-message-btn btn btn-primary" 
-                                data-case-id="${caseItem.id}"
+                                data-case-id="${safeId}"
                                 style="padding: 1rem 2.5rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 700; border-radius: 1rem; box-shadow: 0 6px 20px rgba(30, 64, 175, 0.35); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 1rem; letter-spacing: 0.3px; position: relative; overflow: hidden;"
                                 onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 8px 24px rgba(30, 64, 175, 0.45)'" 
                                 onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 20px rgba(30, 64, 175, 0.35)'">
-                            <span style="font-size: 1.2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">💬</span>
+                            
                             <span>Open Messages</span>
                             ${(() => {
                                 // Only count unread admin messages (exclude status changes)
@@ -1380,7 +1409,7 @@
         async function downloadAllFiles(caseId, token) {
             try {
                 showToast('Preparing download...', 'info');
-                const response = await fetch(`/api/client/cases/${caseId}/download-all?token=${token}`);
+                const response = await fetch(`${getBackendUrl()}/api/client/cases/${caseId}/download-all?token=${token}`);
                 const data = await response.json();
                 
                 if (!data.success) {
@@ -1423,7 +1452,7 @@
                     showToast('Downloading files individually...', 'success');
                 }
             } catch (error) {
-                console.error('Download error:', error);
+                // Download error (details not exposed)
                 showToast('Failed to download files: ' + error.message, 'error');
             }
         };
@@ -1455,11 +1484,12 @@
             if (submitBtn) {
                 const originalContent = submitBtn.innerHTML;
                 submitBtn.disabled = true;
+                // Use textContent for safety instead of innerHTML
                 submitBtn.innerHTML = '<span class="spinner" style="width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block;"></span> <span>Sending...</span>';
             }
             
             try {
-                const response = await fetch('/api/client/reply', {
+                const response = await fetch(`${getBackendUrl()}/api/client/reply`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ token, caseId, message })
@@ -1468,7 +1498,7 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    showToast('Message sent successfully! ✓', 'success');
+                    showToast('Message sent successfully!', 'success');
                     if (textarea) {
                         textarea.value = '';
                         textarea.style.borderColor = 'var(--border)';
@@ -1491,12 +1521,15 @@
                     throw new Error(data.error || 'Failed to send message');
                 }
             } catch (error) {
-                console.error('Reply error:', error);
-                showToast('Failed to send message: ' + error.message, 'error');
+                // Log error without exposing sensitive details
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Reply error:', error);
+                }
+                showToast('Failed to send message: ' + (error.message || 'Unknown error'), 'error');
                 if (textarea) textarea.disabled = false;
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = isModal ? '<span>📤</span> <span>Send</span>' : '<span>📤</span> <span>Send Message</span>';
+                    submitBtn.innerHTML = isModal ? ' <span>Send</span>' : '<span>📤</span> <span>Send Message</span>';
                 }
             }
         }
@@ -1606,7 +1639,7 @@
             if (allMessages.length === 0) {
                 modalBody.innerHTML = `
                     <div style="text-align: center; padding: 3rem 1rem;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">💬</div>
+                        
                         <p style="margin: 0; color: var(--text-light); font-size: 0.95rem;">No messages yet. Start the conversation below!</p>
                     </div>
                 `;
@@ -1634,10 +1667,10 @@
                                                 ${escapeHtml(msg.sender || (isClient ? 'You' : 'Case Team'))}
                                             </span>
                                             ${isClient ? `
-                                                <span style="font-size: 1rem; opacity: 0.7;">✓</span>
+                                                <span data-icon="check" style="display: inline-block; width: 16px; height: 16px; opacity: 0.7;"></span>
                                             ` : `
                                                 <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #1e40af, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.875rem; flex-shrink: 0;">
-                                                    ${(msg.sender || 'T')[0].toUpperCase()}
+                                                    ${escapeHtml((msg.sender || 'T')[0].toUpperCase())}
                                                 </div>
                                             `}
                                         </div>
@@ -1669,21 +1702,23 @@
             }
             
             // Render message input form
+            // Escape caseId for use in attributes
+            const safeCaseId = escapeHtml(caseId);
             modalFooter.innerHTML = `
-                <form class="client-reply-form" data-case-id="${caseId}" style="display: flex; flex-direction: column; gap: 1rem;">
+                <form class="client-reply-form" data-case-id="${safeCaseId}" style="display: flex; flex-direction: column; gap: 1rem;">
                     <div style="position: relative;">
                         <textarea 
-                            id="modalMessageInput-${caseId}"
+                            id="modalMessageInput-${safeCaseId}"
                             placeholder="Type your message here..." 
                             required 
                             style="width: 100%; min-height: 100px; max-height: 150px; padding: 1rem; padding-right: 4rem; border: 2px solid var(--border); border-radius: 0.75rem; font-family: inherit; resize: vertical; font-size: 0.95rem; line-height: 1.5; transition: all 0.2s;"
-                            oninput="this.style.borderColor = this.value.trim() ? 'var(--primary)' : 'var(--border)'; const counter = document.getElementById('modalCharCounter-${caseId}'); if (counter) counter.textContent = this.value.length + ' / 1000';"
+                            oninput="this.style.borderColor = this.value.trim() ? 'var(--primary)' : 'var(--border)'; const counter = document.getElementById('modalCharCounter-${safeCaseId}'); if (counter) counter.textContent = this.value.length + ' / 1000';"
                         ></textarea>
-                        <div id="modalCharCounter-${caseId}" style="position: absolute; bottom: 0.75rem; right: 3.5rem; font-size: 0.7rem; color: var(--text-light); pointer-events: none;">0 / 1000</div>
+                        <div id="modalCharCounter-${safeCaseId}" style="position: absolute; bottom: 0.75rem; right: 3.5rem; font-size: 0.7rem; color: var(--text-light); pointer-events: none;">0 / 1000</div>
                     </div>
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-light);">
-                            <span>🔒</span>
+                            
                             <span>Encrypted & secure</span>
                         </div>
                         <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; border-radius: 0.75rem;">
@@ -1868,13 +1903,13 @@
                     if (file.size > maxSize) {
                         statusDiv.style.display = 'block';
                         statusDiv.className = 'form-status status-error';
-                        statusDiv.textContent = `❌ File "${file.name}" exceeds 10MB limit`;
+                        statusDiv.textContent = `File "${file.name}" exceeds 10MB limit`;
                         return;
                     }
                     if (!allowedTypes.includes(file.type)) {
                         statusDiv.style.display = 'block';
                         statusDiv.className = 'form-status status-error';
-                        statusDiv.textContent = `❌ File type not supported: "${file.name}"`;
+                        statusDiv.textContent = `File type not supported: "${file.name}"`;
                         return;
                     }
                 }
@@ -1891,7 +1926,7 @@
                         formData.append('files', file);
                     });
                     
-                    const response = await fetch('/api/contact', {
+                    const response = await fetch(`${getBackendUrl()}/api/contact`, {
                         method: 'POST',
                         body: formData
                     });
@@ -1901,7 +1936,7 @@
                     if (data.success) {
                         statusDiv.style.display = 'block';
                         statusDiv.className = 'form-status status-success';
-                        statusDiv.textContent = `✅ Case ${data.caseId} submitted successfully! We've sent a confirmation email. Our team will contact you within 24-48 hours.`;
+                        statusDiv.textContent = `Case ${data.caseId} submitted successfully! We've sent a confirmation email. Our team will contact you within 24-48 hours.`;
                         
                         // Reset form
                         form.reset();
@@ -1917,10 +1952,10 @@
                         throw new Error(data.error || 'Submission failed');
                     }
                 } catch (error) {
-                    console.error('Inquiry submission error:', error);
+                    // Inquiry submission error (details not exposed)
                     statusDiv.style.display = 'block';
                     statusDiv.className = 'form-status status-error';
-                    statusDiv.textContent = `❌ Submission failed: ${error.message}. Please try again.`;
+                    statusDiv.textContent = `Submission failed: ${error.message}. Please try again.`;
                 } finally {
                     submitBtn.disabled = false;
                     submitText.style.display = 'inline-block';
